@@ -9,7 +9,7 @@ public static class GridHolder
 {
     private static Cell[,] grid;
 
-    public static Cell[,] GetWalkableGrid()
+    public static Cell[,] GetGrid()
     {
         return grid;
     }
@@ -21,6 +21,58 @@ public static class GridHolder
             Debug.LogError("Cell: " + "x: " + x + "y: " + y + "is outside grid range");
         }
         grid[x, y].walkable = walkable;
+    }
+
+    public static bool IsWalkable(int x, int y)
+    {
+        if (!IsInsideWorld(x, y))
+        {
+            return false;
+        }
+        return grid[x, y].walkable;
+    }
+
+    public static bool IsWalkable(Vector3Int pos)
+    {
+        return IsWalkable(pos.x, pos.y);
+    }
+
+    public static Cell GetCell(int x, int y)
+    {
+        if (!IsInsideWorld(x, y))
+        {
+            return null;
+        }
+
+        return grid[x, y];
+    }
+
+    public static Cell GetCell(Vector3Int pos)
+    {
+        return GetCell(pos.x, pos.y);
+    }
+
+    public static bool IsInsideWorld(int x, int y)
+    {
+        if (x < 0 || y < 0)
+        {
+            return false;
+        }
+        if (x > ruleSet.GRID_WIDTH - 1)
+        {
+            return false;
+        }
+        if (y > ruleSet.GRID_HEIGHT - 1)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool IsInsideWorld(Vector3Int pos)
+    {
+        return IsInsideWorld(pos.x, pos.y);
     }
 
     public static void GenerateGrid()
@@ -54,6 +106,8 @@ public static class GridHolder
         {
             item.walkable = false;
         }
+
+        Pathfinding.SetAllCells(asList);
 
 
     }

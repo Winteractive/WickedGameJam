@@ -11,9 +11,10 @@ public class RuleSet : ScriptableObject
 
     public Int2 OBSTACLE_AMOUNT;
 
-    public float PLAYER_SPEED;
+    public float PLAYER_MOVEMENT_TICK;
+    public float MONSTER_MOVEMENT_TICK;
+
     public float PLAYER_HEALTH;
-    public float MONSTER_SPEED;
     public float LIGHT_RADIUS;
     public float HEALTH_LOSS_RATE;
     public float HEALTH_GAIN_RATE;

@@ -20,7 +20,7 @@ public static class WorldPainter
 
     internal static void PaintWorld()
     {
-        Cell[,] cellsInWorld = GetWalkableGrid();
+        Cell[,] cellsInWorld = GetGrid();
         for (int x = 0; x < cellsInWorld.GetLength(0); x++)
         {
             for (int y = 0; y < cellsInWorld.GetLength(1); y++)

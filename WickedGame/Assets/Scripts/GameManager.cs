@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public delegate void GameStateDelegate(HealthSystem.Entity entity);
     public GameStateDelegate gameOverDelegate;
 
-    public enum GameState { play, pause};
+    public enum GameState { play, pause };
 
     public static GameManager INSTANCE;
 
@@ -29,8 +29,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        ServiceLocator.SetDebugProvider(new RealDebugProvider());
         GridHolder.GenerateGrid();
         WorldPainter.PaintWorld();
+        Pathfinding.SwitchToManhattan();
     }
 
     public void EvaluateGameState(HealthSystem.Entity entity)
