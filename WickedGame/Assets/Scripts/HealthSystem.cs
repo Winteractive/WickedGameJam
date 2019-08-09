@@ -55,14 +55,11 @@ public class HealthSystem : MonoBehaviour
         tempMaxHealth = maxHealth;
     }
 
-    public float GetMaxHealth()
-    {
-        return maxHealth;
-    }
     public float GetTempMaxHealth()
     {
         return tempMaxHealth;
     }
+
     public void SetTempMaxHealth(float newMaxHealth)
     {
         tempMaxHealth = newMaxHealth;
