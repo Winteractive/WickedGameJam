@@ -38,11 +38,17 @@ public static class GridHolder
                 grid[x, y].y = y;
                 grid[x, y].cellType = Cell.CellType.Basic;
                 asList.Add(grid[x, y]);
+
+
+                if (x == 0 || y == 0 || x == ruleSet.GRID_WIDTH - 1 || y == ruleSet.GRID_HEIGHT - 1)
+                {
+                    grid[x, y].walkable = false;
+                }
             }
         }
 
         asList = asList.OrderBy(x => Guid.NewGuid()).ToList();
-        List<Cell> obstacles = asList.Take(ruleSet.OBSTACLE_AMOUNT.GetRandomValue()).ToList();
+        List<Cell> obstacles = asList.Take(ruleSet.OBSTACLE_AMOUNT.GetRandomValue()).Where(x => x.walkable).ToList();
 
         foreach (var item in obstacles)
         {
