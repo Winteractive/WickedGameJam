@@ -48,7 +48,7 @@ public static class GridHolder
         }
 
         asList = asList.OrderBy(x => Guid.NewGuid()).ToList();
-        List<Cell> obstacles = asList.Take(ruleSet.OBSTACLE_AMOUNT.GetRandomValue()).Where(x => x.walkable).ToList();
+        List<Cell> obstacles = asList.Where(x => x.walkable).Take(ruleSet.OBSTACLE_AMOUNT.GetRandomValue()).ToList();
 
         foreach (var item in obstacles)
         {
