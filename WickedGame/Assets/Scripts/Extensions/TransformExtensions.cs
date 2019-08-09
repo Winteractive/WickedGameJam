@@ -15,12 +15,4 @@ public static class TransformExtensions
     {
         tra.localScale = from * amount;
     }
-
-    public static void DestroyItween(this GameObject obj)
-    {
-        if (obj.GetComponent<iTween>())
-        {
-            Object.Destroy(obj.GetComponent<iTween>());
-        }
-    }
 }
