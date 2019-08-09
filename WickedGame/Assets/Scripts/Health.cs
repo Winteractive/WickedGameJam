@@ -1,0 +1,51 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Health
+{
+    public Unit myUnit;//declare in Unit.Awake
+    float maxHealth;
+    float tempMaxHealth;
+    float currentHealth;
+
+    public float GetTempMaxHealth()
+    {
+        return tempMaxHealth;
+    }
+
+    public void SetTempMaxHealth(float newMaxHealth)
+    {
+        tempMaxHealth = newMaxHealth;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+    }
+
+    public void GainHealth(float gain)
+    {
+        if (currentHealth < tempMaxHealth)
+        {
+            if ((currentHealth + gain) > tempMaxHealth)
+            {
+                currentHealth = tempMaxHealth;
+            }
+            else
+            {
+                currentHealth += gain;
+            }
+        }
+    }
+
+    public bool CheckIfHealthIsZero(float health)//if Unit dies, send Unit to GameManager.EvaluateGameState
+    {
+        if (health <= 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+}
