@@ -6,9 +6,17 @@ public class HealthSystem : MonoBehaviour
 {
     HealthSystem INSTANCE;
 
+    float nextTickTime = 1f;
+    public float tick = 0.1f;
+
     float maxHealth;
     float tempMaxHealth;
     public float currentHealth;
+
+    public bool inLight;
+
+    public float darknessDamage = 1;
+    public float healingPoints = 1;
 
     private void Awake()
     {
@@ -19,6 +27,26 @@ public class HealthSystem : MonoBehaviour
         else
         {
             Destroy(this);
+        }
+    }
+
+    private void Update()
+    {
+        if (inLight)
+        {
+            if (Time.time > nextTickTime)
+            {
+                nextTickTime += tick;
+                TakeDamage(darknessDamage);
+            }
+        }
+        else if (!inLight)
+        {
+            if (Time.time > nextTickTime)
+            {
+                nextTickTime += tick;
+                GainHealth(healingPoints);
+            }
         }
     }
 
