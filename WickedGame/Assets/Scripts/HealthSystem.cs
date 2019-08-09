@@ -133,10 +133,10 @@ public class HealthSystem : MonoBehaviour
         switch (entity)
         {
             case Entity.Player:
-                //Awww, you died and lost
+                GameManager.INSTANCE.gameOverDelegate(Entity.Player);
                 break;
             case Entity.Monster:
-                //Yay, you survived and won
+                GameManager.INSTANCE.gameOverDelegate(Entity.Monster);
                 break;
             default:
                 break;
