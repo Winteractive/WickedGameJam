@@ -5,9 +5,6 @@ using static Rules;
 
 public class GameManager : MonoBehaviour
 {
-    public delegate void GameStateDelegate(HealthSystem.Entity entity);
-    public GameStateDelegate gameOverDelegate;
-
     public enum GameState { play, pause};
 
     public static GameManager INSTANCE;
@@ -33,18 +30,8 @@ public class GameManager : MonoBehaviour
         WorldPainter.PaintWorld();
     }
 
-    public void EvaluateGameState(HealthSystem.Entity entity)
+    public void EvaluateGameState()
     {
-        switch (entity)
-        {
-            case HealthSystem.Entity.Player:
-                //lose the game
-                break;
-            case HealthSystem.Entity.Monster:
-                //win the game
-                break;
-            default:
-                break;
-        }
+
     }
 }
