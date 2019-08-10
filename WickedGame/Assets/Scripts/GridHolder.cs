@@ -9,6 +9,8 @@ public static class GridHolder
 {
     private static Cell[,] grid;
 
+    public static event Action<Vector3Int> BranchSnap = delegate { };
+
     public static Cell[,] GetGrid()
     {
         return grid;
@@ -106,7 +108,27 @@ public static class GridHolder
             item.walkable = false;
         }
 
+        asList = asList.OrderBy(x => Guid.NewGuid()).ToList();
+        List<Cell> branches = asList.Where(x => x.walkable).Take(ruleSet.BRANCH_AMOUNT.GetRandomValue()).ToList();
+
+        foreach (var item in branches)
+        {
+            item.cellType = Cell.CellType.Branch;
+        }
+
         Pathfinding.SetAllCells(asList);
+    }
+
+    internal static void CheckForBranch(Vector3Int vector3Int)
+    {
+        Cell cell = GetCell(vector3Int);
+        ServiceLocator.GetDebugProvider().Log(cell.cellType);
+        if (cell.cellType == Cell.CellType.Branch)
+        {
+            ServiceLocator.GetDebugProvider().Log("branchSnap");
+            BranchSnap?.Invoke(vector3Int);
+            ServiceLocator.GetAudioProvider().PlaySoundEvent("Branch");
+        }
     }
 
     internal static Cell GetRandomWalkableCell()

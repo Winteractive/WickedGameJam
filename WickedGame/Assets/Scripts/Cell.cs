@@ -6,7 +6,7 @@ using UnityEngine;
 public class Cell
 {
     public bool walkable;
-    public enum CellType { Basic, Trap_Up, Trap_Down, Trap_Left, Trap_Right };
+    public enum CellType { Basic, Trap_Up, Trap_Down, Trap_Left, Trap_Right, Branch };
     public CellType cellType;
     public Int2 pos;
 

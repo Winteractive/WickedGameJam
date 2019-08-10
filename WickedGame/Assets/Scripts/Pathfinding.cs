@@ -92,7 +92,6 @@ public static class Pathfinding
 
     public static void CalculateNeighbours()
     {
-        Debug.Log("calculate Neighbours");
         foreach (Cell pathfindingTile in allCells)
         {
             pathfindingTile.SetNeighbours(GetNeighbours(pathfindingTile));
