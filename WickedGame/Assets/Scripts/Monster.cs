@@ -11,6 +11,7 @@ public class Monster : Unit
     public Modes currentMode;
     float moveTimer;
     Unit target;
+    float speed;
     float timeBetweenSteps;
 
     float happyTimer;
@@ -18,6 +19,7 @@ public class Monster : Unit
     void Start()
     {
         moveTimer = 3f;
+        speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
 
         target = GameObject.FindWithTag("Player").GetComponent<Unit>();
         pos.x = 5;
