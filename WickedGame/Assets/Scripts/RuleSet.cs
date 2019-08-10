@@ -17,6 +17,7 @@ public class RuleSet : ScriptableObject
     public float PLAYER_HEALTH;
     public float MONSTER_HEALTH;
     public float LIGHT_RADIUS;
-    public float HEALTH_LOSS_RATE;
+    public float PLAYER_HEALTH_LOSS_RATE;
+    public float MONSTER_HEALTH_LOSS_RATE;
     public float HEALTH_GAIN_RATE;
 }

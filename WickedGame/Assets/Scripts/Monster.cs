@@ -10,6 +10,7 @@ public class Monster : Unit
     float moveTimer;
     Unit target;
     float speed;
+    float burningDamage = 1;
 
     void Start()
     {
@@ -26,6 +27,12 @@ public class Monster : Unit
 
     void Update()
     {
+        if (hp.CheckIfHealthIsZero(hp.GetCurrentHealth()))
+        {
+            //dead
+            GameManager.INSTANCE.EvaluateGameState(this);
+        }
+
         switch (currentMode)
         {
             case Modes.Search:

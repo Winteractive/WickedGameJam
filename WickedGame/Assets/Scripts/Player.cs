@@ -23,8 +23,24 @@ public class Player : Unit
         InputManager.INSTANCE.DirectionInput -= MoveAlongDirection;
     }
 
+    private void OnTriggerEnter2D(Collider2D monster)
+    {
+        inLight = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D monster)
+    {
+        inLight = false;
+    }
+
     private void Update()
     {
+        if (hp.CheckIfHealthIsZero(hp.GetCurrentHealth()))
+        {
+            //dead
+            GameManager.INSTANCE.EvaluateGameState(this);
+        }
+
         if (inLight)
         {
 

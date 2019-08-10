@@ -37,8 +37,11 @@ public class GameManager : MonoBehaviour
         Pathfinding.SwitchToManhattan();
     }
 
-    public void EvaluateGameState()
+    public void EvaluateGameState(Unit unit)
     {
+        if (true)
+        {
 
+        }
     }
 }

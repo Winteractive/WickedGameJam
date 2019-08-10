@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Health
 {
-    public Unit myUnit;//declare in Unit.Awake
+    public Unit myUnit;
     float maxHealth;
     float tempMaxHealth;
     float currentHealth;
@@ -17,6 +17,11 @@ public class Health
     public void SetCurrentHealth(float currentHealth)
     {
         this.currentHealth = currentHealth;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
     }
 
     public float GetTempMaxHealth()
