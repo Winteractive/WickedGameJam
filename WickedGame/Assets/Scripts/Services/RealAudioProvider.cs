@@ -52,6 +52,19 @@ public class RealAudioProvider : IAudioService
         }
     }
 
+    public void PlaySoundEvent(AudioClip clip)
+    {
+
+        AudioSource selectedSource = sources.Dequeue();
+        sources.Enqueue(selectedSource);
+        if (selectedSource.isPlaying)
+        {
+            selectedSource.Stop();
+        }
+        selectedSource.PlayOneShot(clip);
+    }
+
+
     public void StopAll(string ID)
     {
         for (int i = 0; i < sourceAmount; i++)

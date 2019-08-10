@@ -48,7 +48,6 @@ public abstract class Unit : MonoBehaviour
             "time", Rules.ruleSet.PLAYER_MOVEMENT_TICK / 2,
             "easeType", iTween.EaseType.easeInOutSine
             ));
-        //iTween.MoveAdd(this.gameObject, toAdd, Rules.ruleSet.MOVEMENT_TICK / 2);
     }
 
 

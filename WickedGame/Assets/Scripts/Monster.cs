@@ -20,10 +20,24 @@ public class Monster : Unit
         pos.x = 5;
         pos.y = 5;
         this.transform.position = new Vector3(5, 0, 5);
+        hp = new Health();
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH);
         hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH);
     }
 
+    private void ChangeMode(Modes newMode)
+    {
+        currentMode = newMode;
+        switch (currentMode)
+        {
+            case Modes.Search:
+                speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
+                break;
+            case Modes.Hunt:
+                speed = ruleSet.MONSTER_MOVEMENT_TICK_HUNT;
+                break;
+        }
+    }
 
     void Update()
     {

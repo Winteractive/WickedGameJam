@@ -8,6 +8,10 @@ public class NullAudioProvider : IAudioService
     {
     }
 
+    public void PlaySoundEvent(AudioClip clip)
+    {
+    }
+
     public void StopAll(string ID)
     {
     }

@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 8435754736897323915}
   - component: {fileID: 8435754736897323912}
   - component: {fileID: 8435754736897323913}
-  - component: {fileID: 8435754736897323918}
   - component: {fileID: -5404487566952693509}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8435754736897323918
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8435754736897323919}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-5404487566952693509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc9d7dd25428134fb6f3c5b2bf01045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  speed: 0
+  pos:
+    x: 0
+    y: 0
+  facingDirection: 0
   inLight: 0
+  stepSFXList: []

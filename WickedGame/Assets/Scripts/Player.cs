@@ -6,6 +6,7 @@ using static Rules;
 public class Player : Unit
 {
     public bool inLight;
+    public List<string> stepSFXList;
 
     private void Start()
     {
@@ -13,6 +14,7 @@ public class Player : Unit
         pos.x = ruleSet.GRID_WIDTH / 2;
         pos.y = ruleSet.GRID_HEIGHT / 2;
         this.transform.position = new Vector3(pos.x, 0, pos.y);
+        hp = new Health();
         hp.myUnit = this;
         hp.SetMaxHealth(ruleSet.PLAYER_HEALTH);
         hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
@@ -36,7 +38,11 @@ public class Player : Unit
     public override void MoveAlongDirection(InputManager.Direction direction)
     {
         base.MoveAlongDirection(direction);
-        ServiceLocator.GetAudioProvider().PlaySoundEvent()
+        if (stepSFXList == null || stepSFXList.Count == 0)
+        {
+            return;
+        }
+        ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom());
     }
 
     private void Update()
