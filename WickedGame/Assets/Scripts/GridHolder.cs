@@ -86,8 +86,8 @@ public static class GridHolder
             {
                 grid[x, y] = new Cell();
                 grid[x, y].walkable = true;
-                grid[x, y].x = x;
-                grid[x, y].y = y;
+                grid[x, y].pos.x = x;
+                grid[x, y].pos.y = y;
                 grid[x, y].cellType = Cell.CellType.Basic;
                 asList.Add(grid[x, y]);
 
@@ -111,7 +111,4 @@ public static class GridHolder
 
 
     }
-
-
-
 }

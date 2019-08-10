@@ -29,6 +29,8 @@ public class RuleSet : ScriptableObject
 
     public float MONSTER_WAIT_TIME;
 
+    public float LIGHT_FLICKER_SPEED;
+
     public RuleSet CreateClone()
     {
         RuleSet newRuleSet = Instantiate(this);

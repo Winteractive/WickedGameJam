@@ -395,15 +395,24 @@ public static class Pathfinding
             }
             Cell current = FindLowestFCostCell();
 
-            ServiceLocator.GetDebugProvider().Log(current.AsVector3Int());
-
             open.Remove(current);
             closed.Add(current);
 
+            if (current.pos.IsSame(goal.pos))
+            {
+                ServiceLocator.GetDebugProvider().Log("Was on same position");
+            }
 
             if (current == goal)
             {
+                ServiceLocator.GetDebugProvider().Log("current == goal");
+
+
                 path.Add(current);
+
+
+
+
                 do
                 {
                     current = current.pfParent;
@@ -415,7 +424,7 @@ public static class Pathfinding
 
 
 
-                } while (current.pfParent != start);
+                } while (current.pfParent != start && current.pfParent != null);
 
 
                 ServiceLocator.GetDebugProvider().Log("path found");
@@ -431,7 +440,7 @@ public static class Pathfinding
                     continue;
                 }
 
-                if (neighbour.IsViablePathfindingCell() == false)
+                if (neighbour.IsViablePathfindingCell() == false && neighbour != goal)
                 {
                     continue;
                 }
