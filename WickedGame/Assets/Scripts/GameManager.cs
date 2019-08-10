@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState gameState)
     {
-        this.gameState = GameState.play;
+        this.gameState = gameState;
     }
 
     public GameState GetGameState()

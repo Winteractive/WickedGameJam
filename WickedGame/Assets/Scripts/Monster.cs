@@ -21,6 +21,8 @@ public class Monster : Unit
 
     void Start()
     {
+        pos.x = 5;
+        pos.y = 5;
         if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
         {
             //player previous pos
@@ -36,8 +38,6 @@ public class Monster : Unit
 
         moveTimer = 3f;
         target = GameObject.FindWithTag("Player").GetComponent<Unit>();
-        pos.x = 5;
-        pos.y = 5;
         speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH + monsterGrowth;
         hp = new Health();
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
