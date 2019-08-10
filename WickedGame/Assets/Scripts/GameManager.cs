@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public delegate void GameStateDelegate();
     public GameStateDelegate gameOverDelegate;
 
-    public  enum GameState { play, pause, gameOver, gameFinish };
+    public enum GameState { play, pause, gameOver, gameFinish };
     private GameState gameState;
 
     public static GameManager INSTANCE;
@@ -60,6 +60,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void NewWorld()
+    {
+        GridHolder.GenerateGrid();
+        WorldPainter.RemoveWorld();
+        WorldPainter.PaintWorld();
+        Pathfinding.SetUp();
+        Pathfinding.SwitchToManhattan();
+        SetGameState(GameState.play);
+    }
+
     public void SetGameState(GameState gameState)
     {
         this.gameState = gameState;
@@ -68,6 +78,13 @@ public class GameManager : MonoBehaviour
     public GameState GetGameState()
     {
         return gameState;
+    }
+
+    IEnumerator ResetDelay()
+    {
+        yield return new WaitForSecondsRealtime(ruleSet.RESET_DELAY);
+
+        NewWorld();
     }
 
     public void GameOver()
