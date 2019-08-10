@@ -10,12 +10,11 @@ public class Monster : Unit
     float moveTimer;
     Unit target;
     float speed;
-    float burningDamage = 1;
 
     void Start()
     {
         moveTimer = 3f;
-        speed = ruleSet.MONSTER_MOVEMENT_TICK;
+        speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
         target = GameObject.FindWithTag("Player").GetComponent<Unit>();
         pos.x = 5;
         pos.y = 5;
