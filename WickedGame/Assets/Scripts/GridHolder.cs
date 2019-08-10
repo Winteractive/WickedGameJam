@@ -108,4 +108,9 @@ public static class GridHolder
 
         Pathfinding.SetAllCells(asList);
     }
+
+    internal static Cell GetRandomWalkableCell()
+    {
+        return grid.AsList().Where(x => x.walkable).OrderBy(x => Guid.NewGuid()).First();
+    }
 }
