@@ -14,6 +14,7 @@ public class Player : Unit
     Vector3 startPosition;
     InLightChecker lightChecker;
     public ParticleSystem fire;
+    public Light fireLight;
 
     Slider healthSlider;
 
@@ -147,6 +148,7 @@ public class Player : Unit
         // {
         if (fire)
         {
+            fireLight.enabled = true;
             fire.Play();
             Invoke("StopFire", 2f);
         }
@@ -157,6 +159,7 @@ public class Player : Unit
 
     private void StopFire()
     {
+        fireLight.enabled = false;
         fire.Stop();
     }
 }

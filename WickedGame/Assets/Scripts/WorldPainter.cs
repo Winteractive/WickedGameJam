@@ -41,7 +41,7 @@ public static class WorldPainter
                         ServiceLocator.GetDebugProvider().Log("branch spawned");
                         GameObject branch = UnityEngine.Object.Instantiate(branches.GetRandom());
                         branch.transform.SetParent(parent.transform);
-                        branch.transform.position = new Vector3(x, 0.1f, y);
+                        branch.transform.position = new Vector3(x, 0f, y);
                     }
                 }
                 else
