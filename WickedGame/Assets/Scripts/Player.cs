@@ -7,19 +7,30 @@ public class Player : Unit
 {
     public bool inLight;
     public List<string> stepSFXList;
-    
+    Vector3 startPosition;
 
     private void Start()
     {
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
+        {
+            //new pos
+            this.transform.position = startPosition;
+        }
+        else
+        {
+            //new pos
+            this.transform.position = new Vector3(pos.x, 0, pos.y);
+        }
+
         InputManager.INSTANCE.DirectionInput += MoveAlongDirection;
         pos.x = ruleSet.GRID_WIDTH / 2;
         pos.y = ruleSet.GRID_HEIGHT / 2;
-        this.transform.position = new Vector3(pos.x, 0, pos.y);
         hp = new Health();
         hp.myUnit = this;
         hp.SetMaxHealth(ruleSet.PLAYER_HEALTH);
         hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
         hp.IsDead += GameManager.INSTANCE.GameOver;
+        hp.IsDead += SavePlayerPos;
     }
 
     private void OnDisable()
@@ -48,13 +59,28 @@ public class Player : Unit
 
     private void Update()
     {
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.pause)
+        {
+            return;
+        }
+
         if (inLight)
         {
-
+            hp.TakeDamage(ruleSet.PLAYER_HEALTH_LOSS_RATE * Time.deltaTime);
         }
         else
         {
-
+            hp.GainHealth(ruleSet.PLAYER_HEALTH_GAIN_RATE * Time.deltaTime);
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            hp.TakeDamage(ruleSet.PLAYER_HEALTH_LOSS_RATE);
+        }
+    }
+
+    public void SavePlayerPos()
+    {
+        startPosition = this.transform.position;
     }
 }
