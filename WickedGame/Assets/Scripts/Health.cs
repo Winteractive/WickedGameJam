@@ -9,6 +9,16 @@ public class Health
     float tempMaxHealth;
     float currentHealth;
 
+    public void SetMaxHealth(float maxHealth)
+    {
+        this.maxHealth = maxHealth;
+    }
+
+    public void SetCurrentHealth(float currentHealth)
+    {
+        this.currentHealth = currentHealth;
+    }
+
     public float GetTempMaxHealth()
     {
         return tempMaxHealth;

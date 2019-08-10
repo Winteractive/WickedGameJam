@@ -6,6 +6,7 @@ using static InputManager;
 public abstract class Unit : MonoBehaviour
 {
     public Int2 pos;
+    protected Health hp;
 
 
 
