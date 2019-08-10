@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ServiceLocator.SetDebugProvider(new RealDebugProvider());
+        ruleSet = ruleSet.CreateClone();
         GridHolder.GenerateGrid();
         WorldPainter.PaintWorld();
         Pathfinding.SwitchToManhattan();
