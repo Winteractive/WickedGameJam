@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static InputManager;
@@ -8,7 +9,7 @@ public abstract class Unit : MonoBehaviour
     public Int2 pos;
     protected Health hp;
     public Direction facingDirection;
-
+    public GameObject visualRepresentation;
 
 
     public virtual void MoveAlongDirection(Direction direction)
@@ -48,7 +49,86 @@ public abstract class Unit : MonoBehaviour
             "time", Rules.ruleSet.PLAYER_MOVEMENT_TICK / 2,
             "easeType", iTween.EaseType.easeInOutSine
             ));
+
+
+        RotateToFaceDirection(direction);
     }
 
+    private void RotateToFaceDirection(Direction direction)
+    {
+        Direction prevDirection = facingDirection;
+        facingDirection = direction;
 
+        if (prevDirection == facingDirection)
+        {
+            ServiceLocator.GetDebugProvider().Log("Same direction", LogType.Log);
+            return;
+        }
+
+        switch (prevDirection)
+        {
+            case Direction.Up:
+                switch (facingDirection)
+                {
+                    case Direction.Down:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        break;
+                    case Direction.Right:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        break;
+                    case Direction.Left:
+                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        break;
+                }
+                break;
+            case Direction.Down:
+                switch (facingDirection)
+                {
+                    case Direction.Up:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        break;
+                    case Direction.Right:
+                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        break;
+                    case Direction.Left:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        break;
+                }
+                break;
+            case Direction.Right:
+                switch (facingDirection)
+                {
+                    case Direction.Up:
+                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        break;
+                    case Direction.Down:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        break;
+                    case Direction.Left:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        break;
+                }
+                break;
+            case Direction.Left:
+                switch (facingDirection)
+                {
+                    case Direction.Up:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        break;
+                    case Direction.Down:
+                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        break;
+                    case Direction.Right:
+                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        break;
+
+                }
+                break;
+            case Direction.NONE:
+                ServiceLocator.GetDebugProvider().Log("this should never happen", LogType.Error);
+                break;
+            default:
+                break;
+        }
+    }
 }

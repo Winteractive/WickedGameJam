@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
             //no changes to values
         }
         ServiceLocator.SetDebugProvider(new RealDebugProvider());
+        ruleSet = ruleSet.CreateClone();
         GridHolder.GenerateGrid();
         WorldPainter.PaintWorld();
         Pathfinding.SwitchToManhattan();
