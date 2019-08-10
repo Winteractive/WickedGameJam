@@ -10,7 +10,7 @@ public static class WorldPainter
     public static List<GameObject> walkableTiles;
     public static List<GameObject> unWalkableTiles;
 
-    [RuntimeInitializeOnLoadMethod]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void LoadResources()
     {
         walkableTiles = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Tiles/Walkable"));
@@ -42,7 +42,7 @@ public static class WorldPainter
         }
     }
 
-    public  static void RemoveWorld()
+    public static void RemoveWorld()
     {
         MonoBehaviour.Destroy(parent);
     }

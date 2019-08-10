@@ -11,6 +11,14 @@ public abstract class Unit : MonoBehaviour
     public Direction facingDirection;
     public GameObject visualRepresentation;
 
+    protected virtual void RefreshForNewWorld()
+    {
+        Cell newCell = GridHolder.GetRandomWalkableCell();
+        newCell.walkable = false;
+        pos.x = newCell.GetX();
+        pos.y = newCell.GetY();
+        this.transform.position = new Vector3(pos.x, 0, pos.y);
+    }
 
     public virtual void MoveAlongDirection(Direction direction)
     {

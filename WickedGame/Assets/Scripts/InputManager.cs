@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour
         {
             GameManager.INSTANCE.SetGameState(GameManager.GameState.pause);
         }
-        if (Input.GetKey(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             GameManager.INSTANCE.NewWorld();
         }

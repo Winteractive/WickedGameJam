@@ -17,6 +17,15 @@ public class Rules : MonoBehaviour
             return;
         }
 
+        SetRules();
+    }
+
+    public void SetRules()
+    {
+        if (ruleSet != null)
+        {
+            return;
+        }
         ruleSet = _ruleSet;
     }
 }

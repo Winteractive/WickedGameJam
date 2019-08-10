@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Rules;
 
+[RequireComponent(typeof(InLightChecker))]
 public class Player : Unit
 {
     public bool inLight;
     public List<string> stepSFXList;
     Vector3 startPosition;
+    InLightChecker lightChecker;
+
 
     private void Start()
     {
-
+        lightChecker = GetComponent<InLightChecker>();
         InputManager.INSTANCE.DirectionInput += MoveAlongDirection;
         pos.x = ruleSet.GRID_WIDTH / 2;
         pos.y = ruleSet.GRID_HEIGHT / 2;
@@ -31,22 +34,22 @@ public class Player : Unit
         hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
         hp.IsDead += GameManager.INSTANCE.GameOver;
         hp.IsDead += SavePlayerPos;
+        GameManager.INSTANCE.NewWorldCreated += RefreshForNewWorld;
     }
+
+
 
     private void OnDisable()
     {
         InputManager.INSTANCE.DirectionInput -= MoveAlongDirection;
+        hp.IsDead -= GameManager.INSTANCE.GameOver;
+        hp.IsDead -= SavePlayerPos;
+        GameManager.INSTANCE.NewWorldCreated -= RefreshForNewWorld;
+
+
     }
 
-    private void OnTriggerEnter2D(Collider2D monster)
-    {
-        inLight = true;
-    }
 
-    private void OnTriggerExit2D(Collider2D monster)
-    {
-        inLight = false;
-    }
     public override void MoveAlongDirection(InputManager.Direction direction)
     {
         base.MoveAlongDirection(direction);
@@ -64,7 +67,7 @@ public class Player : Unit
             return;
         }
 
-        if (inLight)
+        if (!lightChecker.inLight)
         {
             hp.TakeDamage(ruleSet.PLAYER_HEALTH_LOSS_RATE * Time.deltaTime);
         }

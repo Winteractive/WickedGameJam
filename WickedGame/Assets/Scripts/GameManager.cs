@@ -6,7 +6,7 @@ using static Rules;
 public class GameManager : MonoBehaviour
 {
     public delegate void GameStateDelegate();
-    public GameStateDelegate gameOverDelegate;
+    public GameStateDelegate NewWorldCreated;
 
     public enum GameState { play, pause, gameOver, gameFinish };
     private GameState gameState;
@@ -26,17 +26,19 @@ public class GameManager : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-        SetGameState(GameState.play);
-    }
 
-    void Start()
-    {
         ServiceLocator.SetDebugProvider(new RealDebugProvider());
+        FindObjectOfType<Rules>().SetRules();
         ruleSet = ruleSet.CreateClone();
         GridHolder.GenerateGrid();
         WorldPainter.PaintWorld();
         Pathfinding.SwitchToManhattan();
         SetGameState(GameState.play);
+    }
+
+    void Start()
+    {
+
     }
 
     private void Update()
@@ -62,11 +64,12 @@ public class GameManager : MonoBehaviour
 
     public void NewWorld()
     {
+        Pathfinding.SetUp();
         GridHolder.GenerateGrid();
         WorldPainter.RemoveWorld();
         WorldPainter.PaintWorld();
-        Pathfinding.SetUp();
         Pathfinding.SwitchToManhattan();
+        NewWorldCreated?.Invoke();
         SetGameState(GameState.play);
     }
 

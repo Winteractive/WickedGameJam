@@ -10,10 +10,12 @@ public class Monster : Unit
     public enum Modes { Search, Hunt, Happy, Dead };
     public Modes currentMode;
 
+    MonsterLight light;
+
     Vector3 startPosition;
     float moveTimer;
     Unit target;
-    float speed;
+    float actionWait;
     float timeBetweenSteps;
 
     float happyTimer;
@@ -22,8 +24,21 @@ public class Monster : Unit
     float newSearchPointTimer;
     Cell searchCell;
 
+    public LayerMask searchMask;
+    RaycastHit hit;
+
+    protected override void RefreshForNewWorld()
+    {
+        base.RefreshForNewWorld();
+        moveTimer = 3;
+        hp = new Health();
+        hp.SetMaxHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
+        hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
+    }
+
     void Start()
     {
+        light = GetComponentInChildren<MonsterLight>();
         pos.x = 5;
         pos.y = 5;
         if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
@@ -41,14 +56,24 @@ public class Monster : Unit
 
         moveTimer = 3f;
         target = GameObject.FindWithTag("Player").GetComponent<Unit>();
-        speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH + monsterGrowth;
+        actionWait = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH - monsterGrowth;
         hp = new Health();
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
         hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
 
         hp.IsDead += GameManager.INSTANCE.GameFinished;
         hp.IsDead += GetPlayerPosition;
+        GameManager.INSTANCE.NewWorldCreated += RefreshForNewWorld;
+
         ChangeMode(Modes.Search);
+    }
+
+    private void OnDisable()
+    {
+        hp.IsDead -= GameManager.INSTANCE.GameFinished;
+        hp.IsDead -= GetPlayerPosition;
+        GameManager.INSTANCE.NewWorldCreated -= RefreshForNewWorld;
+
     }
 
     private void ChangeMode(Modes newMode)
@@ -94,7 +119,7 @@ public class Monster : Unit
             return;
         }
 
-
+        light.UpdateColor(hp.GetCurrentHealth(), hp.GetMaxHealth());
 
         hp.TakeDamage(ruleSet.MONSTER_HEALTH_LOSS_RATE * Time.deltaTime);
 
@@ -107,6 +132,8 @@ public class Monster : Unit
         switch (currentMode)
         {
             case Modes.Search:
+
+
                 if (LookForPlayer())
                 {
                     ChangeMode(Modes.Hunt);
@@ -161,7 +188,19 @@ public class Monster : Unit
 
     private bool LookForPlayer()
     {
-        throw new NotImplementedException();
+        if (Vector3.Distance(transform.position, target.gameObject.transform.position) <= ruleSet.LIGHT_RADIUS)
+        {
+            ServiceLocator.GetDebugProvider().Log("inside distance");
+            if (Physics.Linecast(transform.position, target.transform.position, out hit, searchMask))
+            {
+                ServiceLocator.GetDebugProvider().Log("linecasted");
+                if (hit.collider.gameObject == target.gameObject)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void GetPlayerPosition()

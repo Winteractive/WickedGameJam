@@ -90,7 +90,7 @@ public static class Pathfinding
 
 
 
-    private static void CalculateNeighbours()
+    public static void CalculateNeighbours()
     {
         Debug.Log("calculate Neighbours");
         foreach (Cell pathfindingTile in allCells)
@@ -244,7 +244,6 @@ public static class Pathfinding
         }
         else
         {
-            ServiceLocator.GetDebugProvider().Log("open list was empty");
             return null;
         }
     }
@@ -380,7 +379,7 @@ public static class Pathfinding
 
         if (start == goal)
         {
-            ServiceLocator.GetDebugProvider().Log("pathfinding to own cell... Abort pathfinding");
+            ServiceLocator.GetDebugProvider().Log("pathfinding to own cell... Abort pathfinding", LogType.Log);
             return null;
         }
 
@@ -404,7 +403,6 @@ public static class Pathfinding
             rescueBreak++;
             if (rescueBreak > 500)
             {
-                ServiceLocator.GetDebugProvider().Log("no path found!!!");
                 return null;
             }
             Cell current = FindLowestFCostCell();
@@ -412,14 +410,10 @@ public static class Pathfinding
             open.Remove(current);
             closed.Add(current);
 
-            if (current.pos.IsSame(goal.pos))
-            {
-                ServiceLocator.GetDebugProvider().Log("Was on same position");
-            }
+          
 
             if (current == goal)
             {
-                ServiceLocator.GetDebugProvider().Log("current == goal");
 
 
                 path.Add(current);
@@ -441,7 +435,6 @@ public static class Pathfinding
                 } while (current.pfParent != start && current.pfParent != null);
 
 
-                ServiceLocator.GetDebugProvider().Log("path found");
 
                 return path;
             }

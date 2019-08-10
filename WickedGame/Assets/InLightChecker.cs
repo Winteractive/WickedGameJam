@@ -31,13 +31,10 @@ public class InLightChecker : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, monster.gameObject.transform.position) <= ruleSet.LIGHT_RADIUS)
             {
-                ServiceLocator.GetDebugProvider().Log("in range");
                 if (Physics.Linecast(transform.position, monster.transform.position, out hit, monsterMask))
                 {
-                    ServiceLocator.GetDebugProvider().Log("linecast hit");
                     if (hit.collider.gameObject == monster.gameObject)
                     {
-                        ServiceLocator.GetDebugProvider().Log("in light");
                         inLight = true;
                     }
                 }
