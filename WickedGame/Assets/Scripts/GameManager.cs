@@ -6,7 +6,7 @@ using static Rules;
 public class GameManager : MonoBehaviour
 {
 
-    public delegate void GameStateDelegate(HealthSystem.Entity entity);
+    public delegate void GameStateDelegate();
     public GameStateDelegate gameOverDelegate;
 
     public enum GameState { play, pause};
