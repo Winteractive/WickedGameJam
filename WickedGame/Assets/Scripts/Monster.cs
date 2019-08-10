@@ -22,17 +22,12 @@ public class Monster : Unit
         this.transform.position = new Vector3(5, 0, 5);
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH);
         hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH);
+        hp.IsDead += GameManager.INSTANCE.GameFinished;
     }
 
 
     void Update()
     {
-        if (hp.CheckIfHealthIsZero(hp.GetCurrentHealth()))
-        {
-            //dead
-            GameManager.INSTANCE.EvaluateGameState(this);
-        }
-
         switch (currentMode)
         {
             case Modes.Search:

@@ -36,17 +36,11 @@ public class Player : Unit
     public override void MoveAlongDirection(InputManager.Direction direction)
     {
         base.MoveAlongDirection(direction);
-        ServiceLocator.GetAudioProvider().PlaySoundEvent()
+        //ServiceLocator.GetAudioProvider().PlaySoundEvent()
     }
 
     private void Update()
     {
-        if (hp.CheckIfHealthIsZero(hp.GetCurrentHealth()))
-        {
-            //dead
-            GameManager.INSTANCE.EvaluateGameState(this);
-        }
-
         if (inLight)
         {
 

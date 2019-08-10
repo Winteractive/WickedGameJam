@@ -17,9 +17,10 @@ public class Health
         this.maxHealth = maxHealth;
     }
 
-    public void SetCurrentHealth(float currentHealth)
+    public void SetCurrentHealth(float newHealth)
     {
-        this.currentHealth = currentHealth;
+        this.currentHealth = newHealth;
+        CheckIfHealthIsZero(currentHealth);
     }
 
     public float GetCurrentHealth()
@@ -40,6 +41,7 @@ public class Health
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        CheckIfHealthIsZero(currentHealth);
     }
 
     public void GainHealth(float gain)
@@ -57,13 +59,11 @@ public class Health
         }
     }
 
-    public bool CheckIfHealthIsZero(float health)//if Unit dies, send Unit to GameManager.EvaluateGameState
+    public void CheckIfHealthIsZero(float health)
     {
         if (health <= 0)
         {
-            return true;
+            IsDead?.Invoke();
         }
-
-        return false;
     }
 }
