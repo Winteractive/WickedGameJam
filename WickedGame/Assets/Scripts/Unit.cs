@@ -7,10 +7,11 @@ public abstract class Unit : MonoBehaviour
 {
     public Int2 pos;
     protected Health hp;
+    public Direction facingDirection;
 
 
 
-    public void MoveAlongDirection(Direction direction)
+    public virtual void MoveAlongDirection(Direction direction)
     {
         Debug.Log("Move: " + direction);
         Vector3Int toAdd = Vector3Int.zero;

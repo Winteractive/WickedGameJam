@@ -16,11 +16,18 @@ public class Player : Unit
         hp.myUnit = this;
         hp.SetMaxHealth(ruleSet.PLAYER_HEALTH);
         hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
+        hp.IsDead += GameManager.INSTANCE.GameOver;
     }
 
     private void OnDisable()
     {
         InputManager.INSTANCE.DirectionInput -= MoveAlongDirection;
+    }
+
+    public override void MoveAlongDirection(InputManager.Direction direction)
+    {
+        base.MoveAlongDirection(direction);
+        ServiceLocator.GetAudioProvider().PlaySoundEvent()
     }
 
     private void Update()

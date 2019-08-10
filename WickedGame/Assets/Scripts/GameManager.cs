@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public delegate void GameStateDelegate();
     public GameStateDelegate gameOverDelegate;
 
-    public enum GameState { play, pause};
+    public enum GameState { play, pause };
 
 
     public static GameManager INSTANCE;
@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void EvaluateGameState()
+    {
+
+    }
+
+    public void GameOver()
     {
 
     }
