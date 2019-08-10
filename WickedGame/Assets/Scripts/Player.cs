@@ -11,6 +11,10 @@ public class Player : Unit
 
     private void Start()
     {
+
+        InputManager.INSTANCE.DirectionInput += MoveAlongDirection;
+        pos.x = ruleSet.GRID_WIDTH / 2;
+        pos.y = ruleSet.GRID_HEIGHT / 2;
         if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
         {
             //new pos
@@ -21,10 +25,6 @@ public class Player : Unit
             //new pos
             this.transform.position = new Vector3(pos.x, 0, pos.y);
         }
-
-        InputManager.INSTANCE.DirectionInput += MoveAlongDirection;
-        pos.x = ruleSet.GRID_WIDTH / 2;
-        pos.y = ruleSet.GRID_HEIGHT / 2;
         hp = new Health();
         hp.myUnit = this;
         hp.SetMaxHealth(ruleSet.PLAYER_HEALTH);
