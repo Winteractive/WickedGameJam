@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Rules;
 using static InputManager;
-
+using System;
 
 public class Monster : Unit
 {
@@ -18,6 +18,9 @@ public class Monster : Unit
 
     float happyTimer;
     float monsterGrowth;
+
+    float newSearchPointTimer;
+    Cell searchCell;
 
     void Start()
     {
@@ -54,6 +57,8 @@ public class Monster : Unit
         switch (currentMode)
         {
             case Modes.Search:
+                newSearchPointTimer = ruleSet.MONSTER_SEARCH_TIMER.GetRandomValue();
+                searchCell = GridHolder.GetRandomWalkableCell();
                 timeBetweenSteps = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
                 break;
             case Modes.Hunt:
@@ -93,7 +98,6 @@ public class Monster : Unit
 
         hp.TakeDamage(ruleSet.MONSTER_HEALTH_LOSS_RATE * Time.deltaTime);
 
-        Debug.Log(hp.GetCurrentHealth());
 
         if (hp.GetCurrentHealth() <= 0 && currentMode != Modes.Dead)
         {
@@ -103,7 +107,30 @@ public class Monster : Unit
         switch (currentMode)
         {
             case Modes.Search:
-                currentMode = Modes.Hunt;
+                if (LookForPlayer())
+                {
+                    ChangeMode(Modes.Hunt);
+                }
+
+                newSearchPointTimer -= Time.deltaTime;
+                if (newSearchPointTimer <= 0)
+                {
+                    newSearchPointTimer = ruleSet.MONSTER_SEARCH_TIMER.GetRandomValue();
+                    searchCell = GridHolder.GetRandomWalkableCell();
+                }
+
+                moveTimer -= Time.deltaTime;
+                if (moveTimer <= 0)
+                {
+                    moveTimer = timeBetweenSteps;
+                    Direction direction = Pathfinding.GetNextStepDirection(this.pos.GetAsVector3Int(), searchCell.pos.GetAsVector3Int());
+                    if (direction != Direction.NONE)
+                    {
+                        MoveAlongDirection(direction);
+                    }
+                }
+
+
                 break;
             case Modes.Hunt:
                 moveTimer -= Time.deltaTime;
@@ -130,6 +157,11 @@ public class Monster : Unit
                 break;
         }
 
+    }
+
+    private bool LookForPlayer()
+    {
+        throw new NotImplementedException();
     }
 
     public void GetPlayerPosition()

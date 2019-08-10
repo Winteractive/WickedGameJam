@@ -8,14 +8,28 @@ public static class Pathfinding
 {
     public static InputManager.Direction GetNextStepDirection(Unit mover, Unit target)
     {
-        List<Cell> path = PathfindBetween(mover.pos.GetAsVector3Int(), target.pos.GetAsVector3Int());
+
+        return GetNextStepDirection(mover.pos.GetAsVector3Int(), target.pos.GetAsVector3Int());
+        // List<Cell> path = PathfindBetween(mover.pos.GetAsVector3Int(), target.pos.GetAsVector3Int());
+        // if (path == null)
+        // {
+        //     ServiceLocator.GetDebugProvider().Log("no path found");
+        //     return InputManager.Direction.NONE;
+        // }
+        // Cell closestCell = path.Last();
+        // return DirectionManager.GetDirectionBetween(mover.pos.GetAsVector3Int(), closestCell.AsVector3Int());
+    }
+
+    public static InputManager.Direction GetNextStepDirection(Vector3Int mover, Vector3Int target)
+    {
+        List<Cell> path = PathfindBetween(mover, target);
         if (path == null)
         {
             ServiceLocator.GetDebugProvider().Log("no path found");
             return InputManager.Direction.NONE;
         }
         Cell closestCell = path.Last();
-        return DirectionManager.GetDirectionBetween(mover.pos.GetAsVector3Int(), closestCell.AsVector3Int());
+        return DirectionManager.GetDirectionBetween(mover, closestCell.AsVector3Int());
     }
 
     [RuntimeInitializeOnLoadMethod]
@@ -388,7 +402,7 @@ public static class Pathfinding
         do
         {
             rescueBreak++;
-            if (rescueBreak > 50)
+            if (rescueBreak > 500)
             {
                 ServiceLocator.GetDebugProvider().Log("no path found!!!");
                 return null;

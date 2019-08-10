@@ -111,4 +111,9 @@ public static class GridHolder
 
 
     }
+
+    internal static Cell GetRandomWalkableCell()
+    {
+        return grid.AsList().Where(x => x.walkable).OrderBy(x => Guid.NewGuid()).First();
+    }
 }

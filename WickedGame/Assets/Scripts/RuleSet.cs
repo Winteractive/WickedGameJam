@@ -11,6 +11,7 @@ public class RuleSet : ScriptableObject
     public int GRID_HEIGHT;
 
     public Int2 OBSTACLE_AMOUNT;
+    public Int2 MONSTER_SEARCH_TIMER;
 
     public float PLAYER_MOVEMENT_TICK;
     public float PLAYER_HEALTH;

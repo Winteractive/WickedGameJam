@@ -18,20 +18,27 @@ public class WalkableVisualisation : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (GridHolder.GetGrid() != null)
+
+        if (Application.isPlaying == false)
         {
-            foreach (Cell cell in GridHolder.GetGrid())
-            {
-                if (cell.walkable)
-                {
-                    Gizmos.color = Color.green;
-                }
-                else
-                {
-                    Gizmos.color = Color.red;
-                }
-                Gizmos.DrawSphere(cell.AsVector3Int(), 0.4f);
-            }
+            return;
         }
+        if (GridHolder.GetGrid() == null)
+        {
+            return;
+        }
+        foreach (Cell cell in GridHolder.GetGrid())
+        {
+            if (cell.walkable)
+            {
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+            }
+            Gizmos.DrawSphere(cell.AsVector3Int(), 0.4f);
+        }
+
     }
 }
