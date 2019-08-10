@@ -27,7 +27,6 @@ public class RuleSet : ScriptableObject
     public float LIGHT_FLICKER_SPEED;
     //_______________________________________
     public float MONSTER_GROWTH_FACTOR;
-    public float MONSTER_FORGETFULLNESS_TIMER;
     public float MONSTER_WAIT_TIME;
     //_______________________________________
     public float MONSTER_MOVEMENT_TICK_HUNT;
@@ -57,7 +56,6 @@ public class RuleSet : ScriptableObject
         newRuleSet.LIGHT_FLICKER_SPEED = LIGHT_FLICKER_SPEED;
         //_______________________________________
         newRuleSet.MONSTER_GROWTH_FACTOR = MONSTER_GROWTH_FACTOR;
-        newRuleSet.MONSTER_FORGETFULLNESS_TIMER = MONSTER_FORGETFULLNESS_TIMER;
         newRuleSet.MONSTER_WAIT_TIME = MONSTER_WAIT_TIME;
         //_______________________________________
         newRuleSet.MONSTER_MOVEMENT_TICK_HUNT = MONSTER_MOVEMENT_TICK_HUNT;

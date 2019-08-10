@@ -96,6 +96,11 @@ public static class WorldPainter
                     else
                     {
                         selectedObject = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
+                        int rotationTimes = UnityEngine.Random.Range(0, 4);
+                        selectedObject.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                        GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                        tileUnderUnwalkable.transform.SetParent(parent.transform);
+                        tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
                     }
 
                 }

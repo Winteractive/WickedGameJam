@@ -143,14 +143,15 @@ public class Player : Unit
         ServiceLocator.GetDebugProvider().Log("attacked");
         hp.ReduceMaximumHealth(ruleSet.MONSTER_DAMAGE);
         Screenshake.INSTANCE.DoScreenshake();
-        if (hp.GetCurrentHealth() > 0)
+        // if (hp.GetCurrentHealth() > 0)
+        // {
+        if (fire)
         {
-            if (fire)
-            {
-                fire.Play();
-            }
+            fire.Play();
             Invoke("StopFire", 2f);
         }
+
+        // }
 
     }
 
