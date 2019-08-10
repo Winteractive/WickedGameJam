@@ -77,7 +77,6 @@ public static class GridHolder
 
     public static void GenerateGrid()
     {
-
         List<Cell> asList = new List<Cell>();
         grid = new Cell[ruleSet.GRID_WIDTH, ruleSet.GRID_HEIGHT];
         for (int x = 0; x < grid.GetLength(0); x++)
@@ -108,7 +107,5 @@ public static class GridHolder
         }
 
         Pathfinding.SetAllCells(asList);
-
-
     }
 }

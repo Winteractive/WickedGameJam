@@ -6,7 +6,7 @@ using static GridHolder;
 
 public static class WorldPainter
 {
-
+    public static GameObject parent;
     public static List<GameObject> walkableTiles;
     public static List<GameObject> unWalkableTiles;
 
@@ -20,6 +20,7 @@ public static class WorldPainter
 
     internal static void PaintWorld()
     {
+        parent = new GameObject();
         Cell[,] cellsInWorld = GetGrid();
         for (int x = 0; x < cellsInWorld.GetLength(0); x++)
         {
@@ -34,11 +35,15 @@ public static class WorldPainter
                 {
                     selectedObject = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
                 }
+                selectedObject.transform.SetParent(parent.transform);
 
                 selectedObject.transform.position = new Vector3Int(x, 0, y);
             }
         }
     }
 
-
+    public  static void RemoveWorld()
+    {
+        MonoBehaviour.Destroy(parent);
+    }
 }
