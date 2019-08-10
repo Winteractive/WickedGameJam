@@ -31,14 +31,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (gameState == GameState.gameFinish)
-        {
-            //monster grow stronger values
-        }
-        else if (gameState == GameState.gameOver)
-        {
-            //no changes to values
-        }
         ServiceLocator.SetDebugProvider(new RealDebugProvider());
         ruleSet = ruleSet.CreateClone();
         GridHolder.GenerateGrid();

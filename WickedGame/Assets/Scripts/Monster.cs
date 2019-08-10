@@ -75,6 +75,14 @@ public class Monster : Unit
         {
             return;
         }
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameOver)
+        {
+            return;
+        }
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
+        {
+            return;
+        }
 
         hp.TakeDamage(ruleSet.MONSTER_HEALTH_LOSS_RATE * Time.deltaTime);
         if (hp.GetCurrentHealth() == 0 && currentMode != Modes.Dead)
