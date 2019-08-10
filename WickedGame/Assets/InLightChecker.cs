@@ -44,4 +44,12 @@ public class InLightChecker : MonoBehaviour
             }
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        foreach (Monster monster in monsters)
+        {
+            Gizmos.DrawWireSphere(monster.pos.GetAsBoardAlignedVector3Int(), ruleSet.LIGHT_RADIUS);
+        }
+    }
 }

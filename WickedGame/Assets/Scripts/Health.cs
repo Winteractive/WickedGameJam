@@ -20,7 +20,7 @@ public class Health
     public void SetCurrentHealth(float newHealth)
     {
         this.currentHealth = newHealth;
-        CheckIfHealthIsZero(currentHealth);
+        CheckIfHealthIsZero();
     }
 
     public float GetCurrentHealth()
@@ -41,7 +41,7 @@ public class Health
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        CheckIfHealthIsZero(currentHealth);
+        CheckIfHealthIsZero();
     }
 
     public void GainHealth(float gain)
@@ -59,9 +59,9 @@ public class Health
         }
     }
 
-    public void CheckIfHealthIsZero(float health)
+    public void CheckIfHealthIsZero()
     {
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             IsDead?.Invoke();
         }

@@ -84,8 +84,18 @@ public class Monster : Unit
             return;
         }
 
+        if (currentMode == Modes.Dead)
+        {
+            return;
+        }
+
+
+
         hp.TakeDamage(ruleSet.MONSTER_HEALTH_LOSS_RATE * Time.deltaTime);
-        if (hp.GetCurrentHealth() == 0 && currentMode != Modes.Dead)
+
+        Debug.Log(hp.GetCurrentHealth());
+
+        if (hp.GetCurrentHealth() <= 0 && currentMode != Modes.Dead)
         {
             ChangeMode(Modes.Dead);
         }
