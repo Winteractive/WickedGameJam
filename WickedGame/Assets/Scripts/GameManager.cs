@@ -5,7 +5,6 @@ using static Rules;
 
 public class GameManager : MonoBehaviour
 {
-
     public delegate void GameStateDelegate();
     public GameStateDelegate gameOverDelegate;
 
@@ -37,15 +36,12 @@ public class GameManager : MonoBehaviour
         Pathfinding.SwitchToManhattan();
     }
 
-    public void EvaluateGameState(Unit unit)
+    public void GameOver()
     {
-        if (true)
-        {
 
-        }
     }
 
-    public void GameOver()
+    public void GameFinished()
     {
 
     }

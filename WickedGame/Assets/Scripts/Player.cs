@@ -47,12 +47,6 @@ public class Player : Unit
 
     private void Update()
     {
-        if (hp.CheckIfHealthIsZero(hp.GetCurrentHealth()))
-        {
-            //dead
-            GameManager.INSTANCE.EvaluateGameState(this);
-        }
-
         if (inLight)
         {
 

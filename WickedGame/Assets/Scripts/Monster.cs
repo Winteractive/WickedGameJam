@@ -23,6 +23,7 @@ public class Monster : Unit
         hp = new Health();
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH);
         hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH);
+        hp.IsDead += GameManager.INSTANCE.GameFinished;
     }
 
     private void ChangeMode(Modes newMode)
@@ -41,12 +42,6 @@ public class Monster : Unit
 
     void Update()
     {
-        if (hp.CheckIfHealthIsZero(hp.GetCurrentHealth()))
-        {
-            //dead
-            GameManager.INSTANCE.EvaluateGameState(this);
-        }
-
         switch (currentMode)
         {
             case Modes.Search:
