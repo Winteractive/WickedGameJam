@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3745661033181068295}
   - component: {fileID: 5147457723580870147}
   - component: {fileID: 2298163714554922951}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Direction Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 2163528289155475242}
   - component: {fileID: 2967330662670614931}
   - component: {fileID: 3610811172458867583}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 8435754736897323915}
   - component: {fileID: -5404487566952693509}
   - component: {fileID: 2065745266}
+  - component: {fileID: 2139012768895746357}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -244,3 +245,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2139012768895746357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435754736897323919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9806099ec8269c9418c8d5315b58035c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inLight: 0
+  monsterMask:
+    serializedVersion: 2
+    m_Bits: 257
