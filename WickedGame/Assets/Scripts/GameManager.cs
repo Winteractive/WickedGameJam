@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void NewWorld()
+    public void NewWorld()
     {
         GridHolder.GenerateGrid();
         WorldPainter.RemoveWorld();

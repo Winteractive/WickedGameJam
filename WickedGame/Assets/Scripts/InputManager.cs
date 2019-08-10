@@ -74,6 +74,10 @@ public class InputManager : MonoBehaviour
         {
             GameManager.INSTANCE.SetGameState(GameManager.GameState.pause);
         }
+        if (Input.GetKey(KeyCode.N))
+        {
+            GameManager.INSTANCE.NewWorld();
+        }
     }
 
     private void PauseInput()
