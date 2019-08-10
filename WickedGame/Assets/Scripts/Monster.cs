@@ -9,26 +9,42 @@ public class Monster : Unit
 {
     public enum Modes { Search, Hunt, Happy, Dead };
     public Modes currentMode;
+
+    Vector3 startPosition;
     float moveTimer;
     Unit target;
     float speed;
     float timeBetweenSteps;
 
     float happyTimer;
+    float monsterGrowth;
 
     void Start()
     {
-        moveTimer = 3f;
-        speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
+        {
+            //player previous pos
+            monsterGrowth = ruleSet.MONSTER_GROWTH_FACTOR;
+            this.transform.position = startPosition;
+        }
+        else
+        {
+            //new pos
+            monsterGrowth = 0;
+            this.transform.position = new Vector3(5, 0, 5);
+        }
 
+        moveTimer = 3f;
         target = GameObject.FindWithTag("Player").GetComponent<Unit>();
         pos.x = 5;
         pos.y = 5;
-        this.transform.position = new Vector3(5, 0, 5);
+        speed = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH + monsterGrowth;
         hp = new Health();
-        hp.SetMaxHealth(ruleSet.MONSTER_HEALTH);
-        hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH);
+        hp.SetMaxHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
+        hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
+
         hp.IsDead += GameManager.INSTANCE.GameFinished;
+        hp.IsDead += GetPlayerPosition;
         ChangeMode(Modes.Search);
     }
 
@@ -55,6 +71,10 @@ public class Monster : Unit
 
     void Update()
     {
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.pause)
+        {
+            return;
+        }
 
         hp.TakeDamage(ruleSet.MONSTER_HEALTH_LOSS_RATE * Time.deltaTime);
         if (hp.GetCurrentHealth() == 0 && currentMode != Modes.Dead)
@@ -92,5 +112,11 @@ public class Monster : Unit
                 break;
         }
 
+    }
+
+    public void GetPlayerPosition()
+    {
+        //Debug.Log("got player position");
+        startPosition = target.transform.position;
     }
 }

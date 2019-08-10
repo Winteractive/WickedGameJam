@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public delegate void GameStateDelegate();
     public GameStateDelegate gameOverDelegate;
 
-    public enum GameState { play, pause, gameOver, gameFinish };
+    public  enum GameState { play, pause, gameOver, gameFinish };
     private GameState gameState;
 
     public static GameManager INSTANCE;
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
+        SetGameState(GameState.play);
     }
 
     void Start()
@@ -44,6 +45,27 @@ public class GameManager : MonoBehaviour
         WorldPainter.PaintWorld();
         Pathfinding.SwitchToManhattan();
         SetGameState(GameState.play);
+    }
+
+    private void Update()
+    {
+        switch (gameState)
+        {
+            case GameState.play:
+                Time.timeScale = 1;
+                break;
+            case GameState.pause:
+                Time.timeScale = 0;
+                break;
+            case GameState.gameOver:
+                Time.timeScale = 0;
+                break;
+            case GameState.gameFinish:
+                Time.timeScale = 0;
+                break;
+            default:
+                break;
+        }
     }
 
     public void SetGameState(GameState gameState)
@@ -75,6 +97,6 @@ public class GameManager : MonoBehaviour
         //improve monster values
         //new playerSpawn
         //monsterSpawn on last death position
-        Debug.Log("You survived. Congratulations!");
+        ServiceLocator.GetDebugProvider().Log("You survived. Congratulations!");
     }
 }

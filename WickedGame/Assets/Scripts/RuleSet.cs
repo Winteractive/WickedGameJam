@@ -13,21 +13,19 @@ public class RuleSet : ScriptableObject
     public Int2 OBSTACLE_AMOUNT;
 
     public float PLAYER_MOVEMENT_TICK;
-    public float MONSTER_MOVEMENT_TICK_HUNT;
-    public float MONSTER_MOVEMENT_TICK_SEARCH;
-
     public float PLAYER_HEALTH;
-    public float MONSTER_HEALTH;
-
-    public float MONSTER_FORGETFULLNESS_TIMER;
-
-
-    public float LIGHT_RADIUS;
     public float PLAYER_HEALTH_LOSS_RATE;
-    public float MONSTER_HEALTH_LOSS_RATE;
     public float PLAYER_HEALTH_GAIN_RATE;
 
+    public float MONSTER_GROWTH_FACTOR;
+    public float LIGHT_RADIUS;
+    public float MONSTER_FORGETFULLNESS_TIMER;
     public float MONSTER_WAIT_TIME;
+
+    public float MONSTER_MOVEMENT_TICK_HUNT;
+    public float MONSTER_MOVEMENT_TICK_SEARCH;
+    public float MONSTER_HEALTH;
+    public float MONSTER_HEALTH_LOSS_RATE;
 
     public RuleSet CreateClone()
     {
@@ -49,18 +47,5 @@ public class RuleSet : ScriptableObject
         newRuleSet.MONSTER_WAIT_TIME = MONSTER_WAIT_TIME;
 
         return newRuleSet;
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
