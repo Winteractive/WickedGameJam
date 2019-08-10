@@ -15,4 +15,8 @@ public struct Int2
     {
         return Vector3Int.right * x + Vector3Int.up * y;
     }
+    public bool IsSame(Int2 otherPos)
+    {
+        return (x == otherPos.x && y == otherPos.y);
+    }
 }

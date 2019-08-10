@@ -8,8 +8,7 @@ public class Cell
     public bool walkable;
     public enum CellType { Basic, Trap_Up, Trap_Down, Trap_Left, Trap_Right };
     public CellType cellType;
-    public int x;
-    public int y;
+    public Int2 pos;
 
 
     public int h;
@@ -20,7 +19,7 @@ public class Cell
 
     public Vector3Int AsVector3Int()
     {
-        return Vector3Int.right * x + Vector3Int.up * y;
+        return Vector3Int.right * pos.x + Vector3Int.up * pos.y;
     }
 
     public void SetNeighbours(List<Cell> list)
@@ -30,13 +29,15 @@ public class Cell
 
     public int GetX()
     {
-        return x;
+        return pos.x;
     }
 
     public int GetY()
     {
-        return y;
+        return pos.y;
     }
+
+
 
     public int CalculateAndGetF()
     {

@@ -26,6 +26,7 @@ public class RuleSet : ScriptableObject
     public float MONSTER_MOVEMENT_TICK_SEARCH;
     public float MONSTER_HEALTH;
     public float MONSTER_HEALTH_LOSS_RATE;
+    public float LIGHT_FLICKER_SPEED;
 
     public RuleSet CreateClone()
     {

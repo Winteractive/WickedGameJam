@@ -38,6 +38,9 @@ public abstract class Unit : MonoBehaviour
         {
             return;
         }
+
+        MakeCurrentCellWalkable();
+
         pos.x += toAdd.x;
         pos.y += toAdd.z;
         if (GetComponent<iTween>())
@@ -52,6 +55,17 @@ public abstract class Unit : MonoBehaviour
 
 
         RotateToFaceDirection(direction);
+        MakeCurrentCellNotWalkable();
+    }
+
+    private void MakeCurrentCellNotWalkable()
+    {
+        GridHolder.SetWalkableCell(pos.x, pos.y, false);
+    }
+
+    private void MakeCurrentCellWalkable()
+    {
+        GridHolder.SetWalkableCell(pos.x, pos.y, true);
     }
 
     private void RotateToFaceDirection(Direction direction)
