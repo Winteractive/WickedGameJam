@@ -22,7 +22,6 @@ public abstract class Unit : MonoBehaviour
 
     public virtual void MoveAlongDirection(Direction direction)
     {
-        Debug.Log("Move: " + direction);
         Vector3Int toAdd = Vector3Int.zero;
         switch (direction)
         {
@@ -48,17 +47,18 @@ public abstract class Unit : MonoBehaviour
         }
 
         MakeCurrentCellWalkable();
-
-        pos.x += toAdd.x;
-        pos.y += toAdd.z;
         if (GetComponent<iTween>())
         {
             Destroy(GetComponent<iTween>());
+            this.transform.position = pos.GetAsBoardAlignedVector3Int();
         }
-        iTween.MoveAdd(this.gameObject, iTween.Hash(
-            "amount", toAdd.GetAsVector3(),
-            "time", Rules.ruleSet.PLAYER_MOVEMENT_TICK / 2,
-            "easeType", iTween.EaseType.easeInOutSine
+        pos.x += toAdd.x;
+        pos.y += toAdd.z;
+
+        iTween.MoveTo(this.gameObject, iTween.Hash(
+            "position", new Vector3(pos.x, this.transform.position.y, pos.y),
+            "time", Rules.ruleSet.PLAYER_MOVEMENT_TICK,
+            "easeType", iTween.EaseType.linear
             ));
 
 
@@ -83,7 +83,6 @@ public abstract class Unit : MonoBehaviour
 
         if (prevDirection == facingDirection)
         {
-            ServiceLocator.GetDebugProvider().Log("Same direction", LogType.Log);
             return;
         }
 

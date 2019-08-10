@@ -35,6 +35,10 @@ public class RuleSet : ScriptableObject
     public float MONSTER_HEALTH;
     public float MONSTER_HEALTH_LOSS_RATE;
 
+    public float MONSTER_DAMAGE;
+
+    public Int2 BRANCH_AMOUNT;
+
     public RuleSet CreateClone()
     {
         RuleSet newRuleSet = Instantiate(this);
@@ -60,6 +64,8 @@ public class RuleSet : ScriptableObject
         newRuleSet.MONSTER_MOVEMENT_TICK_SEARCH = MONSTER_MOVEMENT_TICK_SEARCH;
         newRuleSet.MONSTER_HEALTH = MONSTER_HEALTH;
         newRuleSet.MONSTER_HEALTH_LOSS_RATE = MONSTER_HEALTH_LOSS_RATE;
+        newRuleSet.MONSTER_DAMAGE = MONSTER_DAMAGE;
+
 
         return newRuleSet;
     }

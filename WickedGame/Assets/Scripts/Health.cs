@@ -13,15 +13,20 @@ public class Health
     public delegate void Dead();
     public Dead IsDead;
 
+    public delegate void HpDelegates(float value);
+    public HpDelegates HpChanged;
+
     public void SetMaxHealth(float maxHealth)
     {
         this.maxHealth = maxHealth;
+        tempMaxHealth = maxHealth;
     }
 
     public void SetCurrentHealth(float newHealth)
     {
         this.currentHealth = newHealth;
         CheckIfHealthIsZero();
+        HpChanged?.Invoke(this.currentHealth);
     }
 
     public float GetCurrentHealth()
@@ -39,25 +44,32 @@ public class Health
         tempMaxHealth = newMaxHealth;
     }
 
-    public void TakeDamage(float damage)
+    public void ReduceMaximumHealth(float amount)
+    {
+        tempMaxHealth -= amount;
+        currentHealth = currentHealth > tempMaxHealth ? tempMaxHealth : currentHealth;
+        HpChanged?.Invoke(this.currentHealth);
+
+    }
+
+    public void TakeDamage(float damage, bool reduceMaximum = false)
     {
         currentHealth -= damage;
         CheckIfHealthIsZero();
+
+        HpChanged?.Invoke(this.currentHealth);
+
     }
 
     public void GainHealth(float gain)
     {
-        if (currentHealth < tempMaxHealth)
-        {
-            if ((currentHealth + gain) > tempMaxHealth)
-            {
-                currentHealth = tempMaxHealth;
-            }
-            else
-            {
-                currentHealth += gain;
-            }
-        }
+        ServiceLocator.GetDebugProvider().Log("gain health: " + gain);
+        gain = Mathf.Abs(gain);
+        currentHealth += gain;
+
+        currentHealth = currentHealth > tempMaxHealth ? tempMaxHealth : currentHealth;
+        HpChanged?.Invoke(this.currentHealth);
+
     }
 
     public void CheckIfHealthIsZero()
@@ -72,4 +84,5 @@ public class Health
     {
         return maxHealth;
     }
+
 }

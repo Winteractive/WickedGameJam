@@ -1,19 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Rules;
 
 [RequireComponent(typeof(InLightChecker))]
 public class Player : Unit
 {
+    public Animator animator;
     public bool inLight;
     public List<string> stepSFXList;
     Vector3 startPosition;
     InLightChecker lightChecker;
+    public ParticleSystem fire;
 
+    Slider healthSlider;
+
+    Vector3 curPos;
+    Vector3 prevPos;
+    public float deltaPosDif;
+
+    public float idleTime;
 
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+        animator.SetTrigger("Idle");
+        prevPos = transform.position;
+        curPos = prevPos;
         lightChecker = GetComponent<InLightChecker>();
         InputManager.INSTANCE.DirectionInput += MoveAlongDirection;
         pos.x = ruleSet.GRID_WIDTH / 2;
@@ -34,6 +49,14 @@ public class Player : Unit
         hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
         hp.IsDead += GameManager.INSTANCE.GameOver;
         hp.IsDead += SavePlayerPos;
+
+        healthSlider = GameObject.FindWithTag("HealthSlider").GetComponent<Slider>();
+        healthSlider.maxValue = hp.GetMaxHealth();
+        healthSlider.minValue = 0;
+        healthSlider.value = hp.GetCurrentHealth();
+
+        hp.HpChanged += UpdateHealthSlider;
+
         GameManager.INSTANCE.NewWorldCreated += RefreshForNewWorld;
     }
 
@@ -50,9 +73,17 @@ public class Player : Unit
     }
 
 
+    private void UpdateHealthSlider(float healthValue)
+    {
+        healthSlider.value = healthValue;
+    }
+
     public override void MoveAlongDirection(InputManager.Direction direction)
     {
         base.MoveAlongDirection(direction);
+
+
+        GridHolder.CheckForBranch(pos.GetAsVector3Int());
         if (stepSFXList == null || stepSFXList.Count == 0)
         {
             return;
@@ -66,6 +97,8 @@ public class Player : Unit
         {
             return;
         }
+
+
 
         if (!lightChecker.inLight)
         {
@@ -82,8 +115,47 @@ public class Player : Unit
         }
     }
 
+    private void LateUpdate()
+    {
+        prevPos = curPos;
+        curPos = this.transform.position;
+        deltaPosDif = Vector3.Distance(prevPos, curPos);
+        if (deltaPosDif == 0)
+        {
+            idleTime += Time.deltaTime;
+        }
+        else
+        {
+            idleTime = 0;
+        }
+
+        animator.SetBool("Moving", !(idleTime > 0.15f));
+
+    }
+
     public void SavePlayerPos()
     {
         startPosition = this.transform.position;
+    }
+
+    internal void GetAttacked()
+    {
+        ServiceLocator.GetDebugProvider().Log("attacked");
+        hp.ReduceMaximumHealth(ruleSet.MONSTER_DAMAGE);
+        Screenshake.INSTANCE.DoScreenshake();
+        if (hp.GetCurrentHealth() > 0)
+        {
+            if (fire)
+            {
+                fire.Play();
+            }
+            Invoke("StopFire", 2f);
+        }
+
+    }
+
+    private void StopFire()
+    {
+        fire.Stop();
     }
 }
