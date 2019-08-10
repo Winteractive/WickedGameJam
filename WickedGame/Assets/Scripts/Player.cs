@@ -16,6 +16,7 @@ public class Player : Unit
         hp.myUnit = this;
         hp.SetMaxHealth(ruleSet.PLAYER_HEALTH);
         hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
+        hp.IsDead += GameManager.INSTANCE.GameOver;
     }
 
     private void OnDisable()
@@ -31,6 +32,11 @@ public class Player : Unit
     private void OnTriggerExit2D(Collider2D monster)
     {
         inLight = false;
+    }
+    public override void MoveAlongDirection(InputManager.Direction direction)
+    {
+        base.MoveAlongDirection(direction);
+        ServiceLocator.GetAudioProvider().PlaySoundEvent()
     }
 
     private void Update()

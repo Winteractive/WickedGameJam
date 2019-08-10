@@ -9,6 +9,9 @@ public class Health
     float tempMaxHealth;
     float currentHealth;
 
+    public delegate void Dead();
+    public Dead IsDead;
+
     public void SetMaxHealth(float maxHealth)
     {
         this.maxHealth = maxHealth;
