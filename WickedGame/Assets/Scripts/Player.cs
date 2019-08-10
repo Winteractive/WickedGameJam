@@ -7,6 +7,7 @@ public class Player : Unit
 {
     public bool inLight;
     public List<string> stepSFXList;
+    
 
     private void Start()
     {

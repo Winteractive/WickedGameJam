@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,10 +31,17 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        NewMethod();
+        if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.play)
+        {
+            MoveInput();
+        }
+        else
+        {
+            PauseInput();
+        }
     }
 
-    private void NewMethod()
+    private void MoveInput()
     {
         moveWaitTimer -= Time.deltaTime;
         if (moveWaitTimer > 0)
@@ -60,6 +68,19 @@ public class InputManager : MonoBehaviour
         {
             moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
             DirectionInput?.Invoke(Direction.Right);
+        }
+
+        if (Input.GetKey(KeyCode.P) || Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.INSTANCE.SetGameState(GameManager.GameState.pause);
+        }
+    }
+
+    private void PauseInput()
+    {
+        if (Input.GetKey(KeyCode.P) || Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.INSTANCE.SetGameState(GameManager.GameState.play);
         }
     }
 }
