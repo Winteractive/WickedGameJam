@@ -42,12 +42,10 @@ public class Monster : Unit
         hp = new Health();
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
         hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
-        if (GetComponent<iTween>())
-        {
-            ServiceLocator.GetDebugProvider().Log("remove itween");
-            Destroy(GetComponent<iTween>());
-        }
-        this.transform.position = new Vector3(pos.x, 0, pos.y);
+
+
+        ChangeMode(Modes.Search);
+        //this.transform.position = new Vector3(pos.x, 0, pos.y);
     }
 
     void Start()
@@ -128,6 +126,8 @@ public class Monster : Unit
                 animator.SetBool("Moving", false);
                 timeBetweenSteps = int.MaxValue;
                 happyTimer = ruleSet.MONSTER_WAIT_TIME;
+                lastKnownCell = null;
+                searchCell = null;
                 break;
             case Modes.Dead:
                 animator.SetBool("FoundPlayer", false);
@@ -148,7 +148,8 @@ public class Monster : Unit
     {
         ChangeMode(Modes.Hunt);
         searchCell = GridHolder.GetCell(pos);
-        timeSinceSpotted = -2;
+        timeSinceSpotted = 0;
+
     }
 
     void Update()
@@ -220,6 +221,8 @@ public class Monster : Unit
                 break;
             case Modes.Hunt:
 
+              
+
                 Cell prevCell = searchCell;
                 Cell LookingAtCell = LookForPlayer();
                 if (LookingAtCell != null)
@@ -245,6 +248,15 @@ public class Monster : Unit
                     if (direction != Direction.NONE)
                     {
                         MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_HUNT);
+                    }
+                    else
+                    {
+                        if (NextToPlayer())
+                        {
+                            AttackPlayer();
+                            ChangeMode(Modes.Happy);
+                            return;
+                        }
                     }
                 }
                 break;
@@ -273,6 +285,7 @@ public class Monster : Unit
         {
             AttackPlayer();
             ChangeMode(Modes.Happy);
+            return;
         }
         else
         {

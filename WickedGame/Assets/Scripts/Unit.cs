@@ -6,6 +6,7 @@ using static InputManager;
 
 public abstract class Unit : MonoBehaviour
 {
+    [SerializeField]
     public Int2 pos;
     protected Health hp;
     public Direction facingDirection;
@@ -13,6 +14,11 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void RefreshForNewWorld()
     {
+        if (GetComponent<iTween>())
+        {
+            ServiceLocator.GetDebugProvider().Log("remove itween");
+            Destroy(GetComponent<iTween>());
+        }
         Cell newCell = GridHolder.GetRandomWalkableCell();
         newCell.walkable = false;
         pos.x = newCell.GetX();

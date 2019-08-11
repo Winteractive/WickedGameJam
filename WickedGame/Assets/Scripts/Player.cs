@@ -133,7 +133,10 @@ public class Player : Unit
             return;
         }
 
-
+        if (GameManager.INSTANCE.GetGameState() != GameManager.GameState.play)
+        {
+            return;
+        }
 
         if (!lightChecker.inLight)
         {
@@ -186,7 +189,6 @@ public class Player : Unit
             {
                 jump.DoJump(1, 1f);
             }
-            ServiceLocator.GetAudioProvider().PlaySoundEvent("Burning");
             isBurning = true;
             fireLight.enabled = true;
             fire.Play();
@@ -195,20 +197,14 @@ public class Player : Unit
 
         if (hp.GetCurrentHealth() <= 0)
         {
-            ServiceLocator.GetAudioProvider().PlaySoundEvent("Death");
-            if (GetComponent<iTween>())
-            {
-                ServiceLocator.GetDebugProvider().Log("remove itween");
-                Destroy(GetComponent<iTween>());
-            }
-            Instantiate(Resources.Load<GameObject>("Prefabs/FirePoof/FirePoof"), this.transform.position + (Vector3.up), Quaternion.identity);
-            FindObjectOfType<FollowCam>().enabled = false;
-            this.transform.position = Vector3.one * 5000;
+          
+           
 
-            GameManager.INSTANCE.SetGameState(GameManager.GameState.gameOver);
+            GameManager.INSTANCE.GameOver();
         }
         else
         {
+            ServiceLocator.GetAudioProvider().PlaySoundEvent("Burning");
             ServiceLocator.GetAudioProvider().PlaySoundEvent("TakeHit");
         }
         // }

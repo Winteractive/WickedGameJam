@@ -24,6 +24,7 @@ public class MonsterFlame : MonoBehaviour
 
     public void ChangeMode(Monster.Modes mode)
     {
+        return;
         switch (mode)
         {
             case Monster.Modes.Search:

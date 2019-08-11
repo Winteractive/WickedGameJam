@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        ServiceLocator.SetDebugProvider(new RealDebugProvider());
+        ServiceLocator.SetDebugProvider(new NullDebugProvider());
         ServiceLocator.SetAudioProvider(new RealAudioProvider());
         ServiceLocator.GetAudioProvider().PlaySoundEvent("Ambience", true);
         FindObjectOfType<Rules>().SetRules();
@@ -90,12 +90,26 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        Debug.Log("GAME OVER!!");
+        if (GetGameState() == GameState.gameOver)
+        {
+            return;
+        }
         SetGameState(GameState.gameOver);
-        //you burn
-        //new level
-        //reset monster values
-        //new playerSpawn
-        //new monsterSpawn
+        ServiceLocator.GetAudioProvider().PlaySoundEvent("Death");
+        ServiceLocator.GetAudioProvider().PlaySoundEvent("Burning02");
+        Player p = FindObjectOfType<Player>();
+
+        if (p.GetComponent<iTween>())
+        {
+            ServiceLocator.GetDebugProvider().Log("remove itween");
+            Destroy(p.GetComponent<iTween>());
+        }
+
+
+        Instantiate(Resources.Load<GameObject>("Prefabs/FirePoof/FirePoof"), p.transform.position + (Vector3.up), Quaternion.identity);
+        FindObjectOfType<FollowCam>().enabled = false;
+        p.transform.position = Vector3.one * 5000;
         Invoke("NewWorld", 2.5f);
         Debug.Log("You died. Game over!");
     }
