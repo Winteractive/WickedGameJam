@@ -170,7 +170,7 @@ public class Monster : Unit
                     Direction direction = Pathfinding.GetNextStepDirection(this.pos.GetAsVector3Int(), searchCell.pos.GetAsVector3Int());
                     if (direction != Direction.NONE)
                     {
-                        MoveAlongDirection(direction);
+                        MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_SEARCH);
                     }
                 }
 
@@ -202,7 +202,7 @@ public class Monster : Unit
                     Direction direction = Pathfinding.GetNextStepDirection(this.pos.GetAsVector3Int(), searchCell.AsVector3Int());
                     if (direction != Direction.NONE)
                     {
-                        MoveAlongDirection(direction);
+                        MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_HUNT);
                     }
                 }
                 break;
@@ -221,7 +221,7 @@ public class Monster : Unit
 
     }
 
-    public override void MoveAlongDirection(Direction direction)
+    public override void MoveAlongDirection(Direction direction, float _speed)
     {
         if (NextToPlayer())
         {
@@ -230,7 +230,21 @@ public class Monster : Unit
         }
         else
         {
-            base.MoveAlongDirection(direction);
+            switch (currentMode)
+            {
+                case Modes.Search:
+                    base.MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_SEARCH);
+                    break;
+                case Modes.Hunt:
+                    base.MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_HUNT);
+                    break;
+                case Modes.Happy:
+                    break;
+                case Modes.Dead:
+                    break;
+                default:
+                    break;
+            }
         }
 
     }

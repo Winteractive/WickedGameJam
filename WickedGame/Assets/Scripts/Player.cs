@@ -85,9 +85,14 @@ public class Player : Unit
         healthSlider.value = healthValue;
     }
 
-    public override void MoveAlongDirection(InputManager.Direction direction)
+    public override void MoveAlongDirection(InputManager.Direction direction, float _speed)
     {
-        base.MoveAlongDirection(direction);
+        _speed = ruleSet.PLAYER_MOVEMENT_TICK;
+        if (isBurning)
+        {
+            _speed = _speed / (ruleSet.PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE);
+        }
+        base.MoveAlongDirection(direction, _speed);
 
 
         GridHolder.CheckForBranch(pos.GetAsVector3Int());

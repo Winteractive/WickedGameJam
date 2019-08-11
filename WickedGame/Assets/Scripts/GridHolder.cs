@@ -122,10 +122,8 @@ public static class GridHolder
     internal static void CheckForBranch(Vector3Int vector3Int)
     {
         Cell cell = GetCell(vector3Int);
-        ServiceLocator.GetDebugProvider().Log(cell.cellType);
         if (cell.cellType == Cell.CellType.Branch)
         {
-            ServiceLocator.GetDebugProvider().Log("branchSnap");
             BranchSnap?.Invoke(vector3Int);
             ServiceLocator.GetAudioProvider().PlaySoundEvent("Branch");
         }

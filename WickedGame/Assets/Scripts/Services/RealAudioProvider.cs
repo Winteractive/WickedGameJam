@@ -45,7 +45,6 @@ public class RealAudioProvider : IAudioService
             {
                 selectedSource.Stop();
             }
-            ServiceLocator.GetDebugProvider().Log("play: " + ID);
             selectedSource.PlayOneShot(nameToClip[ID.ToLower()]);
         }
         else

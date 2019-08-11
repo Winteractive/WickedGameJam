@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
 
     public enum Direction { Up, Down, Right, Left, NONE };
 
-    public delegate void DirectionalInput(Direction dir);
+    public delegate void DirectionalInput(Direction dir, float _speedValue);
     public DirectionalInput DirectionInput;
 
     private void Update()
@@ -66,22 +66,22 @@ public class InputManager : MonoBehaviour
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             moveWaitTimer = baseSpeed;
-            DirectionInput?.Invoke(Direction.Up);
+            DirectionInput?.Invoke(Direction.Up, 1);
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             moveWaitTimer = baseSpeed;
-            DirectionInput?.Invoke(Direction.Down);
+            DirectionInput?.Invoke(Direction.Down, 1);
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             moveWaitTimer = baseSpeed;
-            DirectionInput?.Invoke(Direction.Left);
+            DirectionInput?.Invoke(Direction.Left, 1);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             moveWaitTimer = baseSpeed;
-            DirectionInput?.Invoke(Direction.Right);
+            DirectionInput?.Invoke(Direction.Right, 1);
         }
 
         if (Input.GetKey(KeyCode.P) || Input.GetKey(KeyCode.Escape))
