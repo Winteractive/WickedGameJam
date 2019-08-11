@@ -100,6 +100,7 @@ public class Monster : Unit
                 timeBetweenSteps = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
                 break;
             case Modes.Hunt:
+                ServiceLocator.GetAudioProvider().PlaySoundEvent("Inhale");
                 timeBetweenSteps = ruleSet.MONSTER_MOVEMENT_TICK_HUNT;
                 timeSinceSpotted = 0;
                 break;

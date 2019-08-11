@@ -13,6 +13,7 @@ public static class WorldPainter
     public static List<GameObject> walls;
     public static List<GameObject> corners;
     public static List<GameObject> branches;
+    public static List<GameObject> stoneDeco;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void LoadResources()
@@ -22,6 +23,7 @@ public static class WorldPainter
         walls = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Walls"));
         corners = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Corners"));
         branches = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Branches"));
+        stoneDeco = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/StoneDecoration"));
     }
 
     internal static void PaintWorld()
@@ -42,6 +44,18 @@ public static class WorldPainter
                         GameObject branch = UnityEngine.Object.Instantiate(branches.GetRandom());
                         branch.transform.SetParent(parent.transform);
                         branch.transform.position = new Vector3(x, 0f, y);
+                    }
+                    else
+                    {
+                        if(UnityEngine.Random.value < 0.45f)
+                        {
+                            GameObject stoneDecoration = UnityEngine.Object.Instantiate(stoneDeco.GetRandom());
+                            stoneDecoration.transform.SetParent(parent.transform);
+                            int rotationTimes = UnityEngine.Random.Range(0, 4);
+                            stoneDecoration.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                            stoneDecoration.transform.position = new Vector3(x, 0f, y);
+                        }
+            
                     }
                 }
                 else
