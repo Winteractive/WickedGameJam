@@ -85,20 +85,20 @@ public abstract class Unit : MonoBehaviour
         {
             return;
         }
-
+        float turnTime = 0.3f;
         switch (prevDirection)
         {
             case Direction.Up:
                 switch (facingDirection)
                 {
                     case Direction.Down:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 180, 0), turnTime);
                         break;
                     case Direction.Right:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 90, 0), turnTime);
                         break;
                     case Direction.Left:
-                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, -90, 0), turnTime);
                         break;
                 }
                 break;
@@ -106,13 +106,13 @@ public abstract class Unit : MonoBehaviour
                 switch (facingDirection)
                 {
                     case Direction.Up:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 180, 0), turnTime);
                         break;
                     case Direction.Right:
-                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, -90, 0), turnTime);
                         break;
                     case Direction.Left:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 90, 0), turnTime);
                         break;
                 }
                 break;
@@ -120,13 +120,13 @@ public abstract class Unit : MonoBehaviour
                 switch (facingDirection)
                 {
                     case Direction.Up:
-                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, -90, 0), turnTime);
                         break;
                     case Direction.Down:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 90, 0), turnTime);
                         break;
                     case Direction.Left:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 180, 0), turnTime);
                         break;
                 }
                 break;
@@ -134,13 +134,13 @@ public abstract class Unit : MonoBehaviour
                 switch (facingDirection)
                 {
                     case Direction.Up:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 90, 0), turnTime);
                         break;
                     case Direction.Down:
-                        visualRepresentation.transform.Rotate(new Vector3(0, -90, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, -90, 0), turnTime);
                         break;
                     case Direction.Right:
-                        visualRepresentation.transform.Rotate(new Vector3(0, 180, 0));
+                        iTween.RotateAdd(visualRepresentation, new Vector3(0, 180, 0), turnTime);
                         break;
 
                 }

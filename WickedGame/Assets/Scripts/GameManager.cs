@@ -48,16 +48,16 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameState.play:
-                Time.timeScale = 1;
+                // Time.timeScale = 1;
                 break;
             case GameState.pause:
-                Time.timeScale = 0;
+                //  Time.timeScale = 0;
                 break;
             case GameState.gameOver:
-                Time.timeScale = 0;
+                // Time.timeScale = 0;
                 break;
             case GameState.gameFinish:
-                Time.timeScale = 0;
+                // Time.timeScale = 0;
                 break;
             default:
                 break;
@@ -105,7 +105,12 @@ public class GameManager : MonoBehaviour
 
     public void GameFinished()
     {
+        if (gameState == GameState.gameFinish)
+        {
+            return;
+        }
         SetGameState(GameState.gameFinish);
+        ServiceLocator.GetAudioProvider().PlaySoundEvent("Yeah Win");
         //monster burn
         //new level
         //improve monster values

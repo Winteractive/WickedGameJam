@@ -10,6 +10,10 @@ public class Monster : Unit
     public enum Modes { Search, Hunt, Happy, Dead };
     public Modes currentMode;
 
+    Animator animator;
+
+
+
     MonsterLight light;
     MonsterFlame flame;
 
@@ -42,6 +46,8 @@ public class Monster : Unit
 
     void Start()
     {
+
+        animator = GetComponentInChildren<Animator>();
         light = GetComponentInChildren<MonsterLight>();
         flame = GetComponentInChildren<MonsterFlame>();
         pos.x = 5;
@@ -95,21 +101,36 @@ public class Monster : Unit
         switch (currentMode)
         {
             case Modes.Search:
+                animator.SetBool("FoundPlayer", false);
+                animator.SetBool("Moving", true);
                 newSearchPointTimer = ruleSet.MONSTER_SEARCH_TIMER.GetRandomValue();
                 searchCell = GridHolder.GetRandomWalkableCell();
                 timeBetweenSteps = ruleSet.MONSTER_MOVEMENT_TICK_SEARCH;
                 break;
             case Modes.Hunt:
+                animator.SetBool("FoundPlayer", true);
+                animator.SetBool("Moving", true);
                 ServiceLocator.GetAudioProvider().PlaySoundEvent("Inhale");
                 timeBetweenSteps = ruleSet.MONSTER_MOVEMENT_TICK_HUNT;
                 timeSinceSpotted = 0;
                 break;
             case Modes.Happy:
+                animator.SetBool("FoundPlayer", true);
+                animator.SetBool("Moving", false);
                 timeBetweenSteps = int.MaxValue;
                 happyTimer = ruleSet.MONSTER_WAIT_TIME;
                 break;
             case Modes.Dead:
+                animator.SetBool("FoundPlayer", false);
+                animator.SetBool("Moving", false);
                 timeBetweenSteps = int.MaxValue;
+                if (GetComponent<iTween>())
+                {
+                    ServiceLocator.GetDebugProvider().Log("remove itween");
+                    Destroy(GetComponent<iTween>());
+                }
+                Instantiate(Resources.Load<GameObject>("Prefabs/Poof/Poof"), this.transform.position, Quaternion.identity);
+                this.transform.position = Vector3.one * 5000;
                 break;
         }
     }
@@ -149,6 +170,12 @@ public class Monster : Unit
         if (hp.GetCurrentHealth() <= 0 && currentMode != Modes.Dead)
         {
             ChangeMode(Modes.Dead);
+
+        }
+
+        if (currentMode == Modes.Dead)
+        {
+            return;
         }
 
         switch (currentMode)
@@ -229,6 +256,10 @@ public class Monster : Unit
 
     public override void MoveAlongDirection(Direction direction, float _speed)
     {
+        if (currentMode == Modes.Dead)
+        {
+            return;
+        }
         if (NextToPlayer())
         {
             AttackPlayer();
