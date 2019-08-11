@@ -11,6 +11,7 @@ public class Monster : Unit
     public Modes currentMode;
 
     MonsterLight light;
+    MonsterFlame flame;
 
     Vector3 startPosition;
     float moveTimer;
@@ -42,6 +43,7 @@ public class Monster : Unit
     void Start()
     {
         light = GetComponentInChildren<MonsterLight>();
+        flame = GetComponentInChildren<MonsterFlame>();
         pos.x = 5;
         pos.y = 5;
         if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
@@ -89,6 +91,7 @@ public class Monster : Unit
     private void ChangeMode(Modes newMode)
     {
         currentMode = newMode;
+        flame.ChangeMode(currentMode);
         switch (currentMode)
         {
             case Modes.Search:
@@ -154,6 +157,8 @@ public class Monster : Unit
                 if (LookForPlayer() != null)
                 {
                     ChangeMode(Modes.Hunt);
+                    moveTimer = 0.25f;
+                    return;
                 }
 
                 newSearchPointTimer -= Time.deltaTime;

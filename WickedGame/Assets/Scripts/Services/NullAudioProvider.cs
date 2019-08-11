@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class NullAudioProvider : IAudioService
 {
-    public void PlaySoundEvent(string ID, bool looping = false)
+    public void PlaySoundEvent(string ID, bool looping = false, float volume = 1)
     {
     }
 
-    public void PlaySoundEvent(AudioClip clip, bool looping = false)
+    public void PlaySoundEvent(AudioClip clip, bool looping = false, float volume = 1)
     {
     }
 
