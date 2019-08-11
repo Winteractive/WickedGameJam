@@ -40,7 +40,7 @@ public class RealAudioProvider : IAudioService
         sources.Enqueue(source);
     }
 
-    public void PlaySoundEvent(string ID, bool looping = false)
+    public void PlaySoundEvent(string ID, bool looping = false, float volume = 1)
     {
         if (nameToClip.ContainsKey(ID.ToLower()))
         {
@@ -57,6 +57,7 @@ public class RealAudioProvider : IAudioService
             {
                 selectedSource.Stop();
             }
+            selectedSource.volume = volume;
             selectedSource.clip = nameToClip[ID.ToLower()];
             selectedSource.loop = looping;
             selectedSource.Play();
@@ -67,7 +68,7 @@ public class RealAudioProvider : IAudioService
         }
     }
 
-    public void PlaySoundEvent(AudioClip clip, bool looping = false)
+    public void PlaySoundEvent(AudioClip clip, bool looping = false, float volume = 1)
     {
 
         AudioSource selectedSource = sources.Dequeue();
@@ -83,6 +84,7 @@ public class RealAudioProvider : IAudioService
         {
             selectedSource.Stop();
         }
+        selectedSource.volume = volume;
         selectedSource.loop = looping;
         selectedSource.clip = clip;
         selectedSource.Play();
