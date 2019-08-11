@@ -104,7 +104,7 @@ public class Player : Unit
         if (everyOtherStep == 2)
         {
             everyOtherStep = 0;
-            ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom());
+            ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom(), volume: 0.6f);
         }
         everyOtherStep++;
     }

@@ -29,17 +29,21 @@ public class MonsterFlame : MonoBehaviour
             case Monster.Modes.Search:
                 main.startSize = new ParticleSystem.MinMaxCurve(6, 8);
                 emi.rateOverTime = 40;
+                main.startRotation = new ParticleSystem.MinMaxCurve(-45f, 45f);
                 break;
             case Monster.Modes.Hunt:
-                main.startSize = new ParticleSystem.MinMaxCurve(8, 10);
+                main.startSize = new ParticleSystem.MinMaxCurve(15, 20);
                 emi.rateOverTime = 80;
+                main.startRotation = new ParticleSystem.MinMaxCurve(-7f, 7f);
                 break;
             case Monster.Modes.Happy:
                 main.startSize = new ParticleSystem.MinMaxCurve(6, 8);
+                main.startRotation = new ParticleSystem.MinMaxCurve(-45f, 45f);
                 emi.rateOverTime = 40;
                 break;
             case Monster.Modes.Dead:
                 main.startSize = new ParticleSystem.MinMaxCurve(6, 8);
+                main.startRotation = new ParticleSystem.MinMaxCurve(-45f, 45f);
                 emi.rateOverTime = 0;
                 break;
             default:
