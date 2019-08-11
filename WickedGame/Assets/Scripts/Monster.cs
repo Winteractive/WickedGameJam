@@ -42,6 +42,12 @@ public class Monster : Unit
         hp = new Health();
         hp.SetMaxHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
         hp.SetCurrentHealth(ruleSet.MONSTER_HEALTH + monsterGrowth);
+        if (GetComponent<iTween>())
+        {
+            ServiceLocator.GetDebugProvider().Log("remove itween");
+            Destroy(GetComponent<iTween>());
+        }
+        this.transform.position = new Vector3(pos.x, 0, pos.y);
     }
 
     void Start()
@@ -50,8 +56,11 @@ public class Monster : Unit
         animator = GetComponentInChildren<Animator>();
         light = GetComponentInChildren<MonsterLight>();
         flame = GetComponentInChildren<MonsterFlame>();
-        pos.x = 5;
-        pos.y = 5;
+        Cell randomStartPosition = GridHolder.GetRandomWalkableCell();
+        pos.x = randomStartPosition.pos.x;
+        pos.y = randomStartPosition.pos.y;
+        // pos.x = 5;
+        // pos.y = 5;
         if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
         {
             //player previous pos
@@ -62,7 +71,7 @@ public class Monster : Unit
         {
             //new pos
             monsterGrowth = 0;
-            this.transform.position = new Vector3(5, 0, 5);
+            this.transform.position = new Vector3(pos.x, 0, pos.y);
         }
 
         moveTimer = 3f;

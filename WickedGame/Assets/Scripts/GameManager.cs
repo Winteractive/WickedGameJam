@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         WorldPainter.PaintWorld();
         Pathfinding.SwitchToManhattan();
         NewWorldCreated?.Invoke();
+        FindObjectOfType<FollowCam>().enabled = true;
         SetGameState(GameState.play);
     }
 
@@ -85,12 +86,7 @@ public class GameManager : MonoBehaviour
         return gameState;
     }
 
-    IEnumerator ResetDelay()
-    {
-        yield return new WaitForSecondsRealtime(ruleSet.RESET_DELAY);
 
-        NewWorld();
-    }
 
     public void GameOver()
     {
@@ -100,6 +96,7 @@ public class GameManager : MonoBehaviour
         //reset monster values
         //new playerSpawn
         //new monsterSpawn
+        Invoke("NewWorld", 2.5f);
         Debug.Log("You died. Game over!");
     }
 
@@ -111,6 +108,7 @@ public class GameManager : MonoBehaviour
         }
         SetGameState(GameState.gameFinish);
         ServiceLocator.GetAudioProvider().PlaySoundEvent("Yeah Win");
+        Invoke("NewWorld", 2.5f);
         //monster burn
         //new level
         //improve monster values
@@ -118,4 +116,6 @@ public class GameManager : MonoBehaviour
         //monsterSpawn on last death position
         ServiceLocator.GetDebugProvider().Log("You survived. Congratulations!");
     }
+
+
 }

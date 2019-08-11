@@ -14,6 +14,8 @@ public static class WorldPainter
     public static List<GameObject> corners;
     public static List<GameObject> branches;
     public static List<GameObject> stoneDeco;
+    public static List<GameObject> trees;
+
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void LoadResources()
@@ -24,6 +26,7 @@ public static class WorldPainter
         corners = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Corners"));
         branches = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Branches"));
         stoneDeco = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/StoneDecoration"));
+        trees = new List<GameObject>(Resources.LoadAll<GameObject>("Prefabs/Trees"));
     }
 
     internal static void PaintWorld()
@@ -47,7 +50,7 @@ public static class WorldPainter
                     }
                     else
                     {
-                        if(UnityEngine.Random.value < 0.45f)
+                        if (UnityEngine.Random.value < 0.45f)
                         {
                             GameObject stoneDecoration = UnityEngine.Object.Instantiate(stoneDeco.GetRandom());
                             stoneDecoration.transform.SetParent(parent.transform);
@@ -55,7 +58,7 @@ public static class WorldPainter
                             stoneDecoration.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
                             stoneDecoration.transform.position = new Vector3(x, 0f, y);
                         }
-            
+
                     }
                 }
                 else
@@ -75,6 +78,9 @@ public static class WorldPainter
                                 selectedObject.transform.Rotate(new Vector3(0, 90, 0));
 
                             }
+                            GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                            tileUnderUnwalkable.transform.SetParent(parent.transform);
+                            tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
                         }
                         else if (y == ruleSet.GRID_HEIGHT - 1) // corner
                         {
@@ -83,11 +89,17 @@ public static class WorldPainter
                             {
                                 selectedObject.transform.Rotate(new Vector3(0, -90, 0));
                             }
+                            GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                            tileUnderUnwalkable.transform.SetParent(parent.transform);
+                            tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
                         }
                         else // wall
                         {
                             selectedObject = UnityEngine.Object.Instantiate(walls.GetRandom());
                             selectedObject.transform.Rotate(new Vector3(0, 90, 0));
+                           GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                           tileUnderUnwalkable.transform.SetParent(parent.transform);
+                           tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
 
                         }
                     }
@@ -105,6 +117,9 @@ public static class WorldPainter
                         else // wall
                         {
                             selectedObject = UnityEngine.Object.Instantiate(walls.GetRandom());
+                            GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                            tileUnderUnwalkable.transform.SetParent(parent.transform);
+                            tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
                         }
                     }
                     else
@@ -125,6 +140,79 @@ public static class WorldPainter
                     selectedObject.transform.position = new Vector3Int(x, 0, y);
                 }
 
+            }
+        }
+
+        for (int x = -4; x < cellsInWorld.GetLength(0) + 3; x++)
+        {
+            for (int y = -4; y < cellsInWorld.GetLength(1) + 3; y++)
+            {
+                
+
+                if (x == -1 || y == -1 || x == cellsInWorld.GetLength(0) || y == cellsInWorld.GetLength(1))
+                {
+                    if (UnityEngine.Random.value < 0.7f)
+                    {
+                        GameObject tree = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
+                        tree.transform.SetParent(parent.transform);
+                        tree.transform.position = new Vector3Int(x, 0, y);
+                        int rotationTimes = UnityEngine.Random.Range(0, 4);
+                        tree.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                        GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                        tileUnderUnwalkable.transform.SetParent(parent.transform);
+                        tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
+                    }
+
+                }
+
+                if (x == -2 || y == -2 || x == cellsInWorld.GetLength(0) + 1 || y == cellsInWorld.GetLength(1) + 1)
+                {
+                    if (UnityEngine.Random.value < 0.5f)
+                    {
+                        GameObject tree = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
+                        tree.transform.SetParent(parent.transform);
+                        tree.transform.position = new Vector3Int(x, 0, y);
+                        int rotationTimes = UnityEngine.Random.Range(0, 4);
+                        tree.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                        GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                        tileUnderUnwalkable.transform.SetParent(parent.transform);
+                        tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
+
+                    }
+                }
+
+                if (x == -3 || y == -3 || x == cellsInWorld.GetLength(0) + 2 || y == cellsInWorld.GetLength(1) + 2)
+                {
+                    if (UnityEngine.Random.value < 0.25f)
+                    {
+                        GameObject tree = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
+                        tree.transform.SetParent(parent.transform);
+                        tree.transform.position = new Vector3Int(x, 0, y);
+                        int rotationTimes = UnityEngine.Random.Range(0, 4);
+                        tree.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                        GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                        tileUnderUnwalkable.transform.SetParent(parent.transform);
+                        tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
+
+                    }
+                }
+
+
+                if (x == -4 || y == -4 || x == cellsInWorld.GetLength(0) + 3 || y == cellsInWorld.GetLength(1) + 3)
+                {
+                    if (UnityEngine.Random.value < 0.1f)
+                    {
+                        GameObject tree = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
+                        tree.transform.SetParent(parent.transform);
+                        tree.transform.position = new Vector3Int(x, 0, y);
+                        int rotationTimes = UnityEngine.Random.Range(0, 4);
+                        tree.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                        GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                        tileUnderUnwalkable.transform.SetParent(parent.transform);
+                        tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
+
+                    }
+                }
             }
         }
     }

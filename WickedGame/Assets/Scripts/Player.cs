@@ -38,8 +38,9 @@ public class Player : Unit
         curPos = prevPos;
         lightChecker = GetComponent<InLightChecker>();
         InputManager.INSTANCE.DirectionInput += MoveAlongDirection;
-        pos.x = ruleSet.GRID_WIDTH / 2;
-        pos.y = ruleSet.GRID_HEIGHT / 2;
+        Cell randomStartPosition = GridHolder.GetRandomWalkableCell();
+        pos.x = randomStartPosition.pos.x;
+        pos.y = randomStartPosition.pos.y;
         if (GameManager.INSTANCE.GetGameState() == GameManager.GameState.gameFinish)
         {
             //new pos
@@ -69,7 +70,21 @@ public class Player : Unit
         GameManager.INSTANCE.NewWorldCreated += RefreshForNewWorld;
     }
 
+    protected override void RefreshForNewWorld()
+    {
+        base.RefreshForNewWorld();
+        hp.SetMaxHealth(ruleSet.PLAYER_HEALTH);
+        hp.SetCurrentHealth(ruleSet.PLAYER_HEALTH);
 
+        healthSlider.value = hp.GetCurrentHealth();
+        if (GetComponent<iTween>())
+        {
+            ServiceLocator.GetDebugProvider().Log("remove itween");
+            Destroy(GetComponent<iTween>());
+        }
+        this.transform.position = new Vector3(pos.x, 0, pos.y);
+
+    }
 
     private void OnDisable()
     {
@@ -181,6 +196,16 @@ public class Player : Unit
         if (hp.GetCurrentHealth() <= 0)
         {
             ServiceLocator.GetAudioProvider().PlaySoundEvent("Death");
+            if (GetComponent<iTween>())
+            {
+                ServiceLocator.GetDebugProvider().Log("remove itween");
+                Destroy(GetComponent<iTween>());
+            }
+            Instantiate(Resources.Load<GameObject>("Prefabs/FirePoof/FirePoof"), this.transform.position + (Vector3.up), Quaternion.identity);
+            FindObjectOfType<FollowCam>().enabled = false;
+            this.transform.position = Vector3.one * 5000;
+
+            GameManager.INSTANCE.SetGameState(GameManager.GameState.gameOver);
         }
         else
         {

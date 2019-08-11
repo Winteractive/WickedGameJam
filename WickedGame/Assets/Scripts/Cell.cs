@@ -45,6 +45,11 @@ public class Cell
         return f;
     }
 
+    internal Vector3Int AsBoardOrientedVector3Int()
+    {
+        return pos.GetAsBoardAlignedVector3Int();
+    }
+
     public void ResetPathfindingValues()
     {
         h = 0;

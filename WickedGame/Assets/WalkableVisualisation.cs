@@ -37,7 +37,7 @@ public class WalkableVisualisation : MonoBehaviour
             {
                 Gizmos.color = Color.red;
             }
-            Gizmos.DrawSphere(cell.AsVector3Int(), 0.4f);
+            Gizmos.DrawSphere(cell.AsBoardOrientedVector3Int(), 0.1f);
         }
 
     }
