@@ -50,14 +50,8 @@ public class InputManager : MonoBehaviour
 
     private void MoveInput()
     {
-        if (!Player.isBurning)
-        {
-            moveWaitTimer -= Time.deltaTime;
-        }
-        else
-        {
-            moveWaitTimer -= Time.deltaTime * ruleSet.PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE;
-        }
+        moveWaitTimer -= Time.deltaTime;
+
         if (moveWaitTimer > 0)
         {
             return;
@@ -65,22 +59,22 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            moveWaitTimer = baseSpeed;
+            ResetMoveWaitTimer();
             DirectionInput?.Invoke(Direction.Up, 1);
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            moveWaitTimer = baseSpeed;
+            ResetMoveWaitTimer();
             DirectionInput?.Invoke(Direction.Down, 1);
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            moveWaitTimer = baseSpeed;
+            ResetMoveWaitTimer();
             DirectionInput?.Invoke(Direction.Left, 1);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            moveWaitTimer = baseSpeed;
+            ResetMoveWaitTimer();
             DirectionInput?.Invoke(Direction.Right, 1);
         }
 
@@ -91,6 +85,18 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             GameManager.INSTANCE.NewWorld();
+        }
+    }
+
+    private void ResetMoveWaitTimer()
+    {
+        if (Player.isBurning)
+        {
+            moveWaitTimer = baseSpeed / ruleSet.PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE;
+        }
+        else
+        {
+            moveWaitTimer = baseSpeed;
         }
     }
 

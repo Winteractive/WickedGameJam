@@ -17,6 +17,7 @@ public class Player : Unit
     public Light fireLight;
     public static bool isBurning;
 
+    private Jump jump;
 
     Slider healthSlider;
 
@@ -30,6 +31,7 @@ public class Player : Unit
 
     private void Start()
     {
+        jump = GetComponentInChildren<Jump>();
         animator = GetComponentInChildren<Animator>();
         animator.SetTrigger("Idle");
         prevPos = transform.position;
@@ -165,6 +167,10 @@ public class Player : Unit
         // {
         if (fire)
         {
+            if (jump)
+            {
+                jump.DoJump(1, 1f);
+            }
             ServiceLocator.GetAudioProvider().PlaySoundEvent("Burning");
             isBurning = true;
             fireLight.enabled = true;
@@ -172,6 +178,14 @@ public class Player : Unit
             Invoke("StopFire", 2f);
         }
 
+        if (hp.GetCurrentHealth() <= 0)
+        {
+            ServiceLocator.GetAudioProvider().PlaySoundEvent("Death");
+        }
+        else
+        {
+            ServiceLocator.GetAudioProvider().PlaySoundEvent("TakeHit");
+        }
         // }
 
     }
