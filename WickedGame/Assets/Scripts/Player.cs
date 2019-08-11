@@ -165,6 +165,7 @@ public class Player : Unit
         // {
         if (fire)
         {
+            ServiceLocator.GetAudioProvider().PlaySoundEvent("Burning");
             isBurning = true;
             fireLight.enabled = true;
             fire.Play();
