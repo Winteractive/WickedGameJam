@@ -37,3 +37,4 @@ MonoBehaviour:
   BRANCH_AMOUNT:
     x: 5
     y: 10
+  PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE: 2

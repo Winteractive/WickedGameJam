@@ -1343,21 +1343,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2139012768895746357, guid: d53425666a55c78478da7ff2a9e04c8e,
-        type: 3}
-      propertyPath: monsterMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 2112907875830340064, guid: d53425666a55c78478da7ff2a9e04c8e,
-        type: 3}
-      propertyPath: EmissionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2112907875830340064, guid: d53425666a55c78478da7ff2a9e04c8e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d53425666a55c78478da7ff2a9e04c8e, type: 3}
 --- !u!1001 &626843171485855636
@@ -1375,17 +1360,17 @@ PrefabInstance:
     - target: {fileID: 9053128837887094953, guid: 808d9049aef7e0d4f84d7e379c5aa010,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.62
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9053128837887094953, guid: 808d9049aef7e0d4f84d7e379c5aa010,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9053128837887094953, guid: 808d9049aef7e0d4f84d7e379c5aa010,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9053128837887094953, guid: 808d9049aef7e0d4f84d7e379c5aa010,
         type: 3}

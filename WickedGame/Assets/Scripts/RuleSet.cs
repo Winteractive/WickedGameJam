@@ -38,6 +38,8 @@ public class RuleSet : ScriptableObject
 
     public Int2 BRANCH_AMOUNT;
 
+    public float PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE;
+
     public RuleSet CreateClone()
     {
         RuleSet newRuleSet = Instantiate(this);

@@ -15,8 +15,12 @@ public class Player : Unit
     InLightChecker lightChecker;
     public ParticleSystem fire;
     public Light fireLight;
+    public static bool isBurning;
+
 
     Slider healthSlider;
+
+    int everyOtherStep;
 
     Vector3 curPos;
     Vector3 prevPos;
@@ -58,6 +62,8 @@ public class Player : Unit
 
         hp.HpChanged += UpdateHealthSlider;
 
+
+
         GameManager.INSTANCE.NewWorldCreated += RefreshForNewWorld;
     }
 
@@ -87,9 +93,15 @@ public class Player : Unit
         GridHolder.CheckForBranch(pos.GetAsVector3Int());
         if (stepSFXList == null || stepSFXList.Count == 0)
         {
+            ServiceLocator.GetDebugProvider().Log("step sfx is null");
             return;
         }
-        ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom());
+        if (everyOtherStep == 2)
+        {
+            everyOtherStep = 0;
+            ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom());
+        }
+        everyOtherStep++;
     }
 
     private void Update()
@@ -148,6 +160,7 @@ public class Player : Unit
         // {
         if (fire)
         {
+            isBurning = true;
             fireLight.enabled = true;
             fire.Play();
             Invoke("StopFire", 2f);
@@ -159,6 +172,7 @@ public class Player : Unit
 
     private void StopFire()
     {
+        isBurning = false;
         fireLight.enabled = false;
         fire.Stop();
     }

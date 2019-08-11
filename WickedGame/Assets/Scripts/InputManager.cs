@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Rules;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager INSTANCE;
     public float moveWaitTimer;
+    public float baseSpeed;
 
 
     private void Awake()
@@ -22,6 +24,11 @@ public class InputManager : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
+    }
+
+    private void Start()
+    {
+        baseSpeed = ruleSet.PLAYER_MOVEMENT_TICK;
     }
 
     public enum Direction { Up, Down, Right, Left, NONE };
@@ -43,7 +50,14 @@ public class InputManager : MonoBehaviour
 
     private void MoveInput()
     {
-        moveWaitTimer -= Time.deltaTime;
+        if (!Player.isBurning)
+        {
+            moveWaitTimer -= Time.deltaTime;
+        }
+        else
+        {
+            moveWaitTimer -= Time.deltaTime * ruleSet.PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE;
+        }
         if (moveWaitTimer > 0)
         {
             return;
@@ -51,22 +65,22 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
+            moveWaitTimer = baseSpeed;
             DirectionInput?.Invoke(Direction.Up);
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
+            moveWaitTimer = baseSpeed;
             DirectionInput?.Invoke(Direction.Down);
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
+            moveWaitTimer = baseSpeed;
             DirectionInput?.Invoke(Direction.Left);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
+            moveWaitTimer = baseSpeed;
             DirectionInput?.Invoke(Direction.Right);
         }
 

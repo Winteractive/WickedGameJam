@@ -20,14 +20,15 @@ public class RealAudioProvider : IAudioService
         audioSourceHolder.transform.position = Vector3.zero;
         for (int i = 0; i < sourceAmount; i++)
         {
-            AudioSource source = new GameObject().AddComponent<AudioSource>();
+            AudioSource source = new GameObject("Source " + i.ToString()).AddComponent<AudioSource>();
             source.transform.SetParent(audioSourceHolder.transform);
             source.transform.position = Vector3.zero;
             sources.Enqueue(source);
         }
 
+        nameToClip = new Dictionary<string, AudioClip>();
 
-        loadedClips = Resources.LoadAll<AudioClip>("Music/SFX");
+        loadedClips = Resources.LoadAll<AudioClip>("Audio/SFX");
         foreach (var clip in loadedClips)
         {
             nameToClip.Add(clip.name.ToLower(), clip);
@@ -44,6 +45,7 @@ public class RealAudioProvider : IAudioService
             {
                 selectedSource.Stop();
             }
+            ServiceLocator.GetDebugProvider().Log("play: " + ID);
             selectedSource.PlayOneShot(nameToClip[ID.ToLower()]);
         }
         else

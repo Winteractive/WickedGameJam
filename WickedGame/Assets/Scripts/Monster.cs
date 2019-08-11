@@ -191,7 +191,6 @@ public class Monster : Unit
                     timeSinceSpotted += Time.deltaTime;
                     if (timeSinceSpotted > 1)
                     {
-                        ServiceLocator.GetDebugProvider().Log("lost target");
                         ChangeMode(Modes.Search);
                     }
                 }
@@ -226,7 +225,6 @@ public class Monster : Unit
     {
         if (NextToPlayer())
         {
-            ServiceLocator.GetDebugProvider().Log("next to player");
             AttackPlayer();
             ChangeMode(Modes.Happy);
         }
@@ -254,10 +252,8 @@ public class Monster : Unit
     {
         if (Vector3.Distance(transform.position, player.gameObject.transform.position) <= ruleSet.LIGHT_RADIUS)
         {
-            ServiceLocator.GetDebugProvider().Log("inside distance");
             if (Physics.Linecast(transform.position, player.transform.position, out hit, searchMask))
             {
-                ServiceLocator.GetDebugProvider().Log("linecasted");
                 if (hit.collider.gameObject == player.gameObject)
                 {
                     return GridHolder.GetCell(player.pos.GetAsVector3Int());
@@ -269,7 +265,6 @@ public class Monster : Unit
 
     public void GetPlayerPosition()
     {
-        //Debug.Log("got player position");
         startPosition = player.transform.position;
     }
 }

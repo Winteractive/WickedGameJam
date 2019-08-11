@@ -170,7 +170,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -983,7 +983,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -4960,7 +4960,10 @@ MonoBehaviour:
   visualRepresentation: {fileID: 3032929216550248833}
   animator: {fileID: 0}
   inLight: 0
-  stepSFXList: []
+  stepSFXList:
+  - Step01
+  - Step02
+  - Step03
   fire: {fileID: 2112907875830340064}
   fireLight: {fileID: 6635301303105298996}
   deltaPosDif: 0
@@ -4980,7 +4983,7 @@ MonoBehaviour:
   inLight: 0
   monsterMask:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 256
 --- !u!54 &2065745267
 Rigidbody:
   m_ObjectHideFlags: 0
