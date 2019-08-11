@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Rules;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager INSTANCE;
     public float moveWaitTimer;
+    public float baseSpeed;
 
 
     private void Awake()
@@ -24,9 +26,14 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        baseSpeed = ruleSet.PLAYER_MOVEMENT_TICK;
+    }
+
     public enum Direction { Up, Down, Right, Left, NONE };
 
-    public delegate void DirectionalInput(Direction dir);
+    public delegate void DirectionalInput(Direction dir, float _speedValue);
     public DirectionalInput DirectionInput;
 
     private void Update()
@@ -43,7 +50,14 @@ public class InputManager : MonoBehaviour
 
     private void MoveInput()
     {
-        moveWaitTimer -= Time.deltaTime;
+        if (!Player.isBurning)
+        {
+            moveWaitTimer -= Time.deltaTime;
+        }
+        else
+        {
+            moveWaitTimer -= Time.deltaTime * ruleSet.PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE;
+        }
         if (moveWaitTimer > 0)
         {
             return;
@@ -51,23 +65,23 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
-            DirectionInput?.Invoke(Direction.Up);
+            moveWaitTimer = baseSpeed;
+            DirectionInput?.Invoke(Direction.Up, 1);
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
-            DirectionInput?.Invoke(Direction.Down);
+            moveWaitTimer = baseSpeed;
+            DirectionInput?.Invoke(Direction.Down, 1);
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
-            DirectionInput?.Invoke(Direction.Left);
+            moveWaitTimer = baseSpeed;
+            DirectionInput?.Invoke(Direction.Left, 1);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            moveWaitTimer = Rules.ruleSet.PLAYER_MOVEMENT_TICK;
-            DirectionInput?.Invoke(Direction.Right);
+            moveWaitTimer = baseSpeed;
+            DirectionInput?.Invoke(Direction.Right, 1);
         }
 
         if (Input.GetKey(KeyCode.P) || Input.GetKey(KeyCode.Escape))

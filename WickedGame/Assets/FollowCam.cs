@@ -11,7 +11,7 @@ public class FollowCam : MonoBehaviour
         target = GameObject.FindWithTag("Player").transform;
         Vector3 targetPos = Vector3.zero;
         targetPos = target.transform.position;
-        targetPos += Vector3.up * 7;
+        targetPos += Vector3.up * 4.75f;
         targetPos += Vector3.back * 4;
         // transform.LookAt(target);
         transform.rotation = Quaternion.Euler(60, 0, 0);

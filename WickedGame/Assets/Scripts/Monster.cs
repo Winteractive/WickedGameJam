@@ -170,7 +170,7 @@ public class Monster : Unit
                     Direction direction = Pathfinding.GetNextStepDirection(this.pos.GetAsVector3Int(), searchCell.pos.GetAsVector3Int());
                     if (direction != Direction.NONE)
                     {
-                        MoveAlongDirection(direction);
+                        MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_SEARCH);
                     }
                 }
 
@@ -191,7 +191,6 @@ public class Monster : Unit
                     timeSinceSpotted += Time.deltaTime;
                     if (timeSinceSpotted > 1)
                     {
-                        ServiceLocator.GetDebugProvider().Log("lost target");
                         ChangeMode(Modes.Search);
                     }
                 }
@@ -203,7 +202,7 @@ public class Monster : Unit
                     Direction direction = Pathfinding.GetNextStepDirection(this.pos.GetAsVector3Int(), searchCell.AsVector3Int());
                     if (direction != Direction.NONE)
                     {
-                        MoveAlongDirection(direction);
+                        MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_HUNT);
                     }
                 }
                 break;
@@ -222,17 +221,30 @@ public class Monster : Unit
 
     }
 
-    public override void MoveAlongDirection(Direction direction)
+    public override void MoveAlongDirection(Direction direction, float _speed)
     {
         if (NextToPlayer())
         {
-            ServiceLocator.GetDebugProvider().Log("next to player");
             AttackPlayer();
             ChangeMode(Modes.Happy);
         }
         else
         {
-            base.MoveAlongDirection(direction);
+            switch (currentMode)
+            {
+                case Modes.Search:
+                    base.MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_SEARCH);
+                    break;
+                case Modes.Hunt:
+                    base.MoveAlongDirection(direction, ruleSet.MONSTER_MOVEMENT_TICK_HUNT);
+                    break;
+                case Modes.Happy:
+                    break;
+                case Modes.Dead:
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
@@ -254,10 +266,8 @@ public class Monster : Unit
     {
         if (Vector3.Distance(transform.position, player.gameObject.transform.position) <= ruleSet.LIGHT_RADIUS)
         {
-            ServiceLocator.GetDebugProvider().Log("inside distance");
             if (Physics.Linecast(transform.position, player.transform.position, out hit, searchMask))
             {
-                ServiceLocator.GetDebugProvider().Log("linecasted");
                 if (hit.collider.gameObject == player.gameObject)
                 {
                     return GridHolder.GetCell(player.pos.GetAsVector3Int());
@@ -269,7 +279,6 @@ public class Monster : Unit
 
     public void GetPlayerPosition()
     {
-        //Debug.Log("got player position");
         startPosition = player.transform.position;
     }
 }

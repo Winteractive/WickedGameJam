@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
         }
 
         ServiceLocator.SetDebugProvider(new RealDebugProvider());
+        ServiceLocator.SetAudioProvider(new RealAudioProvider());
+        ServiceLocator.GetAudioProvider().PlaySoundEvent("Ambience", true);
         FindObjectOfType<Rules>().SetRules();
         ruleSet = ruleSet.CreateClone();
         GridHolder.GenerateGrid();

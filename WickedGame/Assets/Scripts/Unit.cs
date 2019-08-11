@@ -20,7 +20,7 @@ public abstract class Unit : MonoBehaviour
         this.transform.position = new Vector3(pos.x, 0, pos.y);
     }
 
-    public virtual void MoveAlongDirection(Direction direction)
+    public virtual void MoveAlongDirection(Direction direction, float _speed)
     {
         Vector3Int toAdd = Vector3Int.zero;
         switch (direction)
@@ -57,7 +57,7 @@ public abstract class Unit : MonoBehaviour
 
         iTween.MoveTo(this.gameObject, iTween.Hash(
             "position", new Vector3(pos.x, this.transform.position.y, pos.y),
-            "time", Rules.ruleSet.PLAYER_MOVEMENT_TICK,
+            "time", _speed,
             "easeType", iTween.EaseType.linear
             ));
 

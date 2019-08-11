@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66423d413fb72cc44b1efd67e1e4dd89, type: 3}
+  m_Name: Playtest01
+  m_EditorClassIdentifier: 
+  GRID_WIDTH: 20
+  GRID_HEIGHT: 20
+  OBSTACLE_AMOUNT:
+    x: 30
+    y: 40
+  MONSTER_SEARCH_TIMER:
+    x: 1
+    y: 2
+  RESET_DELAY: 1
+  PLAYER_MOVEMENT_TICK: 0.33
+  PLAYER_HEALTH: 3
+  PLAYER_HEALTH_LOSS_RATE: 0.2
+  PLAYER_HEALTH_GAIN_RATE: 0.4
+  LIGHT_RADIUS: 5
+  LIGHT_FLICKER_SPEED: 1
+  MONSTER_GROWTH_FACTOR: 0
+  MONSTER_WAIT_TIME: 4
+  MONSTER_MOVEMENT_TICK_HUNT: 0.35
+  MONSTER_MOVEMENT_TICK_SEARCH: 0.75
+  MONSTER_HEALTH: 30
+  MONSTER_HEALTH_LOSS_RATE: 1
+  MONSTER_DAMAGE: 1
+  BRANCH_AMOUNT:
+    x: 5
+    y: 10
+  PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE: 2

@@ -6,7 +6,7 @@ public class RealAudioProvider : IAudioService
 {
 
     private Queue<AudioSource> sources;
-
+    GameObject audioSourceHolder;
     private List<AudioClip> soundClips;
     private Dictionary<string, AudioClip> nameToClip;
     AudioClip[] loadedClips;
@@ -16,35 +16,50 @@ public class RealAudioProvider : IAudioService
     public RealAudioProvider()
     {
         sources = new Queue<AudioSource>();
-        GameObject audioSourceHolder = new GameObject("@Audio Source Holder");
+        audioSourceHolder = new GameObject("@Audio Source Holder");
         audioSourceHolder.transform.position = Vector3.zero;
         for (int i = 0; i < sourceAmount; i++)
         {
-            AudioSource source = new GameObject().AddComponent<AudioSource>();
-            source.transform.SetParent(audioSourceHolder.transform);
-            source.transform.position = Vector3.zero;
-            sources.Enqueue(source);
+            CreateSource();
         }
 
+        nameToClip = new Dictionary<string, AudioClip>();
 
-        loadedClips = Resources.LoadAll<AudioClip>("Music/SFX");
+        loadedClips = Resources.LoadAll<AudioClip>("Audio/SFX");
         foreach (var clip in loadedClips)
         {
             nameToClip.Add(clip.name.ToLower(), clip);
         }
     }
 
-    public void PlaySoundEvent(string ID)
+    private void CreateSource()
+    {
+        AudioSource source = new GameObject("Source").AddComponent<AudioSource>();
+        source.transform.SetParent(audioSourceHolder.transform);
+        source.transform.position = Vector3.zero;
+        sources.Enqueue(source);
+    }
+
+    public void PlaySoundEvent(string ID, bool looping = false)
     {
         if (nameToClip.ContainsKey(ID.ToLower()))
         {
             AudioSource selectedSource = sources.Dequeue();
-            sources.Enqueue(selectedSource);
+            if (!looping)
+            {
+                sources.Enqueue(selectedSource);
+            }
+            else
+            {
+                CreateSource();
+            }
             if (selectedSource.isPlaying)
             {
                 selectedSource.Stop();
             }
-            selectedSource.PlayOneShot(nameToClip[ID.ToLower()]);
+            selectedSource.clip = nameToClip[ID.ToLower()];
+            selectedSource.loop = looping;
+            selectedSource.Play();
         }
         else
         {
@@ -52,16 +67,25 @@ public class RealAudioProvider : IAudioService
         }
     }
 
-    public void PlaySoundEvent(AudioClip clip)
+    public void PlaySoundEvent(AudioClip clip, bool looping = false)
     {
 
         AudioSource selectedSource = sources.Dequeue();
-        sources.Enqueue(selectedSource);
+        if (!looping)
+        {
+            sources.Enqueue(selectedSource);
+        }
+        else
+        {
+            CreateSource();
+        }
         if (selectedSource.isPlaying)
         {
             selectedSource.Stop();
         }
-        selectedSource.PlayOneShot(clip);
+        selectedSource.loop = looping;
+        selectedSource.clip = clip;
+        selectedSource.Play();
     }
 
 

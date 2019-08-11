@@ -41,7 +41,7 @@ public static class WorldPainter
                         ServiceLocator.GetDebugProvider().Log("branch spawned");
                         GameObject branch = UnityEngine.Object.Instantiate(branches.GetRandom());
                         branch.transform.SetParent(parent.transform);
-                        branch.transform.position = new Vector3(x, 0.1f, y);
+                        branch.transform.position = new Vector3(x, 0f, y);
                     }
                 }
                 else
@@ -96,6 +96,11 @@ public static class WorldPainter
                     else
                     {
                         selectedObject = UnityEngine.Object.Instantiate(unWalkableTiles.GetRandom());
+                        int rotationTimes = UnityEngine.Random.Range(0, 4);
+                        selectedObject.transform.Rotate(new Vector3(0, 90 * rotationTimes, 0));
+                        GameObject tileUnderUnwalkable = UnityEngine.Object.Instantiate(walkableTiles.GetRandom());
+                        tileUnderUnwalkable.transform.SetParent(parent.transform);
+                        tileUnderUnwalkable.transform.position = new Vector3Int(x, 0, y);
                     }
 
                 }

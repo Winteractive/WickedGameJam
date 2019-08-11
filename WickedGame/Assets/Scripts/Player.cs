@@ -14,8 +14,13 @@ public class Player : Unit
     Vector3 startPosition;
     InLightChecker lightChecker;
     public ParticleSystem fire;
+    public Light fireLight;
+    public static bool isBurning;
+
 
     Slider healthSlider;
+
+    int everyOtherStep;
 
     Vector3 curPos;
     Vector3 prevPos;
@@ -57,6 +62,8 @@ public class Player : Unit
 
         hp.HpChanged += UpdateHealthSlider;
 
+
+
         GameManager.INSTANCE.NewWorldCreated += RefreshForNewWorld;
     }
 
@@ -78,17 +85,28 @@ public class Player : Unit
         healthSlider.value = healthValue;
     }
 
-    public override void MoveAlongDirection(InputManager.Direction direction)
+    public override void MoveAlongDirection(InputManager.Direction direction, float _speed)
     {
-        base.MoveAlongDirection(direction);
+        _speed = ruleSet.PLAYER_MOVEMENT_TICK;
+        if (isBurning)
+        {
+            _speed = _speed / (ruleSet.PLAYER_BURNING_EXTRA_SPEED_PERCENTAGE);
+        }
+        base.MoveAlongDirection(direction, _speed);
 
 
         GridHolder.CheckForBranch(pos.GetAsVector3Int());
         if (stepSFXList == null || stepSFXList.Count == 0)
         {
+            ServiceLocator.GetDebugProvider().Log("step sfx is null");
             return;
         }
-        ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom());
+        if (everyOtherStep == 2)
+        {
+            everyOtherStep = 0;
+            ServiceLocator.GetAudioProvider().PlaySoundEvent(stepSFXList.GetRandom());
+        }
+        everyOtherStep++;
     }
 
     private void Update()
@@ -143,19 +161,25 @@ public class Player : Unit
         ServiceLocator.GetDebugProvider().Log("attacked");
         hp.ReduceMaximumHealth(ruleSet.MONSTER_DAMAGE);
         Screenshake.INSTANCE.DoScreenshake();
-        if (hp.GetCurrentHealth() > 0)
+        // if (hp.GetCurrentHealth() > 0)
+        // {
+        if (fire)
         {
-            if (fire)
-            {
-                fire.Play();
-            }
+            ServiceLocator.GetAudioProvider().PlaySoundEvent("Burning");
+            isBurning = true;
+            fireLight.enabled = true;
+            fire.Play();
             Invoke("StopFire", 2f);
         }
+
+        // }
 
     }
 
     private void StopFire()
     {
+        isBurning = false;
+        fireLight.enabled = false;
         fire.Stop();
     }
 }

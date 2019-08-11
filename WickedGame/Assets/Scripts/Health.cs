@@ -63,7 +63,6 @@ public class Health
 
     public void GainHealth(float gain)
     {
-        ServiceLocator.GetDebugProvider().Log("gain health: " + gain);
         gain = Mathf.Abs(gain);
         currentHealth += gain;
 
